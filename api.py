@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify
 # However, there are many legitimate cases where cross-origin requests are
 # needed. One example is:
 #
-## Single-page applications (SPA) hosted at example-frontend.com need to call
+## Single-Page Applications (SPA) hosted at example-frontend.com need to call
 ## APIs hosted at api.example-backend.com.
 #
 # To support this safely, CORS lets servers explicitly allow such requests.
@@ -49,6 +49,7 @@ def predict_decision_tree_classifier():
 
     # Performs a prediction using a trained machine learning model
     prediction = decisiontree_classifier_baseline.predict(new_data)[0]
+    
     # Returns the result as a JSON response:
     return jsonify({'Predicted Class = ': int(prediction)})
 
@@ -73,7 +74,7 @@ def predict_decision_tree_classifier():
 #     customer_age = 30
 #     support_calls = 1
 # } | ConvertTo-Json
-#
+
 # Invoke-RestMethod -Uri http://127.0.0.1:5000/predict_decision_tree_classifier `
 #     -Method POST `
 #     -Body $body `
@@ -134,7 +135,7 @@ def predict_decision_tree_regressor():
 #     "BranchSubCounty": "Kilimani",
 #     "ProductCategoryName": "Meat-Based Dishes",
 #     "QuantityOrdered": 8,
-#     "PaymentDate": "2025-07-11"
+#     "PaymentDate": "2025-11-13"
 # }
 
 # *2* Sample cURL POST values
@@ -145,18 +146,18 @@ def predict_decision_tree_regressor():
 # 	\"BranchSubCounty\": \"Kilimani\",
 # 	\"ProductCategoryName\": \"Meat-Based Dishes\",
 # 	\"QuantityOrdered\": 8,
-# 	\"PaymentDate\": \"2025-07-11\"}"
+# 	\"PaymentDate\": \"2025-11-13\"}"
 
 # *3* Sample PowerShell values:
 
 # $body = @{
-#     PaymentDate         = "2025-07-11"
+#     PaymentDate         = "2025-11-13"
 #     CustomerType        = "Business"
 #     BranchSubCounty     = "Kilimani"
 #     ProductCategoryName = "Meat-Based Dishes"
 #     QuantityOrdered = 8
 # } | ConvertTo-Json
-#
+
 # Invoke-RestMethod -Uri http://127.0.0.1:5000/predict_decision_tree_regressor `
 #     -Method POST `
 #     -Body $body `
