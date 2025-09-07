@@ -1,4 +1,4 @@
-# Lab Submission - BBT 4206 - CAT 1 (Takeaway) - Due Date: 30th September 2025
+# Lab Submission Instructions: BBT 4206 - CAT 1 (Takeaway) - Due Date: 30th September 2025
 
 ## Student Details
 
@@ -87,9 +87,11 @@ In practice, the API is the product — it is how others interact with your mode
 The "hidden" learning here is that the delivery mechanism (API design, usability, error handling, and even documentation) often matters more to stakeholders in the industry than the models themselves.
 
 **Baseline (Required):**
+
 - Update [api.py](api.py) to include end-points to serve at least three of the models trained in the previous lab
 
 **Intermediate (Recommended):**
+
 - Update [api.py](api.py) to include end-points to serve the following models:
   - Naive Bayes classifier
   - K-Nearest Neighbors (kNN) classifier
@@ -100,10 +102,12 @@ The "hidden" learning here is that the delivery mechanism (API design, usability
   - A recommender that recommends products to a client based on the association rules created in the previous lab
 
 **Advanced (Optional):**
+
 - Update [api.py](api.py) to include end-points to serve the following:
   - A classifier that predicts the cluster to which a client belongs to
 - Create a web page (HTML and JavaScript) that demonstrates the use of the API
 - Implement basic error handling (e.g., missing inputs).
+- Dockerize your Flask API using Gunicorn to make it "production-ready"
 
 ### Video Demonstration
 
