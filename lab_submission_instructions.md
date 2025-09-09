@@ -107,7 +107,22 @@ The "hidden" learning here is that the delivery mechanism (API design, usability
   - A classifier that predicts the cluster to which a client belongs to
 - Create a web page (HTML and JavaScript) that demonstrates the use of the API
 - Implement basic error handling (e.g., missing inputs).
-- Dockerize your Flask API using Gunicorn to make it "production-ready"
+- Flask comes with a development server (good for testing in development, bust unsafe for production).
+In production, you need a server that can handle many users, concurrency, and failures. That is where **Gunicorn** comes in. It is a Web Server Gateway Interface (WSGI) server built for production.
+- Instead of installing Flask + Gunicorn manually on your machine, you put everything into a Docker image. That image is like a sealed box: it contains your Python code, dependencies, and Gunicorn.
+When you run the container, it behaves like a lightweight server.
+- How the pieces should fit together:
+  - Create a Dockerfile to tell Docker how to build the image (Python, install dependencies, run Gunicorn).
+  - Build the Docker image: A one-time process to create a reusable package.
+  - Run the container: Starts Gunicorn, serving your Flask app (runs the Flask app and handles requests).
+
+- Dockerize (wrap everything into a container that can run anywhere) your Flask API using Gunicorn to make it "production-ready". Make use of a reverse-proxy (Nginx) to shield Gunicorn from the Internet.
+
+- Why this is production-friendly
+  - Portability: the same image runs anywhere (laptop, server, cloud).
+  - Consistency: no “but it works on my machine” problems.
+  - Isolation: your app runs in its own environment, safe from system changes.
+  - Scalability: you can run more containers if you need more capacity.
 
 ### Video Demonstration
 

@@ -16,7 +16,7 @@
 ├── LICENSE
 ├── README.md
 ├── api.py
-├── frontend_tests
+├── frontend
 │   ├── api_consumer.py
 │   ├── api_test_DT_classifier.html
 │   └── api_test_DT_regressor.html
@@ -50,10 +50,11 @@
 
 Refer to the files below for more details:
 
-1. [api_consumer.py](frontend_tests/api_consumer.py)
+1. [api_consumer.py](frontend/api_consumer.py)
 2. [api.py](api.py)
-3. [api_test_DT_classifier.html](frontend_tests/api_test_DT_classifier.html)
-4. [api_test_DT_regressor.html](frontend_tests/api_test_DT_regressor.html)
+3. [api_test_DT_classifier.html](frontend/api_test_DT_classifier.html)
+4. [api_test_DT_regressor.html](frontend/api_test_DT_regressor.html)
+5. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md)
 
 ## Lab Submission Instructions
 

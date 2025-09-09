@@ -26,7 +26,7 @@ decisiontree_regressor_optimum = joblib.load('./model/decisiontree_regressor_opt
 label_encoders_1b = joblib.load('./model/label_encoders_1b.pkl')
 
 # Defines an HTTP endpoint
-@app.route('/predict_decision_tree_classifier', methods=['POST'])
+@app.route('/api/predict_decision_tree_classifier', methods=['POST'])
 def predict_decision_tree_classifier():
     # Accepts JSON data sent by a client (browser, curl, Postman, etc.)
     data = request.get_json()
@@ -61,9 +61,15 @@ def predict_decision_tree_classifier():
 #     "support_calls": 1
 # }
 
-# *2* Sample cURL POST values
+# *2.a.* Sample cURL POST values (without HTTPS in NGINX and Gunicorn)
 
-# curl -X POST http://127.0.0.1:5000/predict_decision_tree_classifier \
+# curl -X POST http://127.0.0.1:5000/api/predict_decision_tree_classifier \
+#   -H "Content-Type: application/json" \
+#   -d "{\"monthly_fee\": 60, \"customer_age\": 30, \"support_calls\": 1}"
+
+# *2.b.* Sample cURL POST values (with HTTPS in NGINX and Gunicorn)
+
+# curl --insecure -X POST https://127.0.0.1/api/predict_decision_tree_classifier \
 #   -H "Content-Type: application/json" \
 #   -d "{\"monthly_fee\": 60, \"customer_age\": 30, \"support_calls\": 1}"
 
@@ -75,12 +81,12 @@ def predict_decision_tree_classifier():
 #     support_calls = 1
 # } | ConvertTo-Json
 
-# Invoke-RestMethod -Uri http://127.0.0.1:5000/predict_decision_tree_classifier `
+# Invoke-RestMethod -Uri http://127.0.0.1:5000/api/predict_decision_tree_classifier `
 #     -Method POST `
 #     -Body $body `
 #     -ContentType "application/json"
 
-@app.route('/predict_decision_tree_regressor', methods=['POST'])
+@app.route('/api/predict_decision_tree_regressor', methods=['POST'])
 def predict_decision_tree_regressor():
     data = request.get_json()
     # Expected input keys:
@@ -138,9 +144,19 @@ def predict_decision_tree_regressor():
 #     "PaymentDate": "2025-11-13"
 # }
 
-# *2* Sample cURL POST values
+# *2.a.* Sample cURL POST values
 
-# curl -X POST http://127.0.0.1:5000/predict_decision_tree_regressor \
+# curl -X POST http://127.0.0.1:5000/api/predict_decision_tree_regressor \
+#   -H "Content-Type: application/json" \
+#   -d "{\"CustomerType\": \"Business\",
+# 	\"BranchSubCounty\": \"Kilimani\",
+# 	\"ProductCategoryName\": \"Meat-Based Dishes\",
+# 	\"QuantityOrdered\": 8,
+# 	\"PaymentDate\": \"2025-11-13\"}"
+
+# *2.b.* Sample cURL POST values
+
+# curl --insecure -X POST https://127.0.0.1/api/predict_decision_tree_regressor \
 #   -H "Content-Type: application/json" \
 #   -d "{\"CustomerType\": \"Business\",
 # 	\"BranchSubCounty\": \"Kilimani\",
@@ -158,7 +174,7 @@ def predict_decision_tree_regressor():
 #     QuantityOrdered = 8
 # } | ConvertTo-Json
 
-# Invoke-RestMethod -Uri http://127.0.0.1:5000/predict_decision_tree_regressor `
+# Invoke-RestMethod -Uri http://127.0.0.1:5000/api/predict_decision_tree_regressor `
 #     -Method POST `
 #     -Body $body `
 #     -ContentType "application/json"

@@ -38,3 +38,4 @@ idna==3.10
 Flask==3.1.2
 decorator==5.2.1
 flask-cors==6.0.1
+gunicorn==22.0.0
