@@ -3,7 +3,7 @@
 ## Step 1: Create a Self-Signed Private Key and Public Certificate for HTTPS
 
 Git Bash is installed together with various UNIX utilities. One of these utilities is **OpenSSL**.
-Execute the following in a terminal to confirm that you have OpenSSL installed:
+Execute the following **in a Git Bash terminal** to confirm that you have OpenSSL installed:
 
 ```shell
 openssl --version
@@ -47,7 +47,7 @@ Anyone could generate a certificate for localhost or even google.com if it is se
 You create a Certificate Signing Request (CSR)
 This file contains your domain name (e.g., yourdomain.co.ke) and your public key.
 You generate the public key from your private key.
-You send the CSR to a Certificate Authority (CA)
+You then send the CSR to a Certificate Authority (CA)
 
 Examples of CAs: Let’s Encrypt (free), DigiCert, GlobalSign, etc.
 
@@ -68,22 +68,24 @@ ssl_certificate     /etc/nginx/certs/yourdomain.crt;
 ssl_certificate_key /etc/nginx/certs/yourdomain.key;
 ```
 
-This deployment is done when the Nginx image is built and the updated configuration ([container-volumes/nginx/nginx.conf](container-volumes/nginx/nginx.conf)) file is uploaded to Nginx.
+In this lab, the deployment is done when the Nginx image is built and the updated configuration ([container-volumes/nginx/nginx.conf](container-volumes/nginx/nginx.conf)) file is uploaded to the running Nginx container.
 
 ## Step 2: Use Docker Compose
 
-The building of the images in Step 3 and Step 4 below is done using the following Docker Compose file: [Docker-Compose.yaml](Docker-Compose.yaml). Execute the following to build the images and run the Docker containers:
+The building of the images in the subsequent steps is done using the following Docker Compose file: [Docker-Compose.yaml](Docker-Compose.yaml). Execute the following to build the images and run the Docker containers:
 
 `docker compose -f Docker-Compose.yaml up --scale flask-gunicorn-app=2 -d`
+
+Docker Compose in turn access the following two Dockerfiles to build the required images:
+
+1. [Dockerfile.flask-gunicorn-app](Dockerfile.flask-gunicorn-app)
+2. [Dockerfile.nginx](Dockerfile.nginx)
 
 ## Step 3: Create the Application Server
 
 The application server is made up of **Gunicorn**, a Web-Server Gateway Interface (WSGI) application server.
 **Gunicorn** runs in a **Python** environment to access **Flask**. Flask serves the model trained using Python through an API.
 ![Request Flow](frontend/RequestFlow.png)
-
-Build the following Dockerfile to create the Gunicorn WSGI application server: [Dockerfile.flask-gunicorn-app](Dockerfile.flask-gunicorn-app)
-Note that the application server also contains Python and Flask installed. We can scale up/down the number of application servers.
 
 ## Step 4: Create the Reverse Proxy
 

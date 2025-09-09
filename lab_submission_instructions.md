@@ -88,7 +88,7 @@ The "hidden" learning here is that the delivery mechanism (API design, usability
 
 **Baseline (Required):**
 
-- Update [api.py](api.py) to include end-points to serve at least three of the models trained in the previous lab
+- Update [api.py](api.py) to include end-points to serve at least three of the models trained in the previous labs since Business Intelligence I.
 
 **Intermediate (Recommended):**
 
@@ -105,7 +105,7 @@ The "hidden" learning here is that the delivery mechanism (API design, usability
 
 - Update [api.py](api.py) to include end-points to serve the following:
   - A classifier that predicts the cluster to which a client belongs to
-- Create a web page (HTML and JavaScript) that demonstrates the use of the API
+- Create a web page(s) (HTML and JavaScript) that demonstrates the use of the API
 - Implement basic error handling (e.g., missing inputs).
 - Flask comes with a development server (good for testing in development, bust unsafe for production).
 In production, you need a server that can handle many users, concurrency, and failures. That is where **Gunicorn** comes in. It is a Web Server Gateway Interface (WSGI) server built for production.
