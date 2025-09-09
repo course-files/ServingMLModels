@@ -13,13 +13,27 @@
 
 ```text
 .
+├── Docker-Compose.yaml
+├── Dockerfile.flask-gunicorn-app
+├── Dockerfile.nginx
 ├── LICENSE
 ├── README.md
+├── RecommendedCitation.bib
 ├── api.py
+├── app_server_reverse_proxy_server_setup.md
+├── container-volumes
+│   └── nginx
+│       ├── certs
+│       │   ├── selfsigned.crt
+│       │   └── selfsigned.key
+│       └── nginx.conf
 ├── frontend
+│   ├── Proxies.png
+│   ├── RequestFlow.png
 │   ├── api_consumer.py
 │   ├── api_test_DT_classifier.html
-│   └── api_test_DT_regressor.html
+│   ├── api_test_DT_regressor.html
+│   └── index.html
 ├── lab_submission_instructions.md
 ├── model
 │   ├── decisiontree_classifier_baseline.pkl
@@ -39,7 +53,7 @@
 ├── rules
 └── setup_instructions.md
 
-4 directories, 22 files
+7 directories, 33 files
 ```
 
 ## Setup Instructions

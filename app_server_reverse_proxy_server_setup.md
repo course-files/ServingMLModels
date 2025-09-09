@@ -26,8 +26,8 @@ Answer the prompts that follow as you see fit.
 The command does the following 2 tasks:
 
 1. Creates a new private key → **certs/selfsigned.key**
-This is secret. YOU SHOULD NOT SHARE IT PUBLICLY.
-Nginx uses it to prove it is the server.
+This is secret. **YOU SHOULD NOT SHARE IT PUBLICLY.**
+Nginx uses it to prove that it is the server.
 
 2. Creates a new public certificate → **certs/selfsigned.crt**
 This is the self-signed certificate.
