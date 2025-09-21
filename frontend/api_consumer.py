@@ -1,5 +1,6 @@
 import requests
 
+# Go to: https://publicapis.io/apis
 # Go to: https://api.stackexchange.com/docs
 
 response = requests.get('https://api.stackexchange.com/2.3/questions?order=desc&sort=activity&site=stackoverflow')
@@ -12,5 +13,3 @@ for data in response.json()['items']:
     print(data['link'])
     print(data['answer_count'])
     print()
-
-# Go to: https://publicapis.io/apis
