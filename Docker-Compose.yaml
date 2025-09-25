@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.flask-gunicorn-app
+    # image: servingmlmodels-flask-gunicorn-app
     expose:
       - "8000"
     restart: always
@@ -11,6 +12,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.nginx
+    # image: servingmlmodels-nginx
     ports:
       - "80:80"
       - "443:443"

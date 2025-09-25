@@ -17,7 +17,11 @@ import joblib
 import pandas as pd
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=False,
+     origins=["https://127.0.0.1", "https://localhost",
+              "https://127.0.0.1:443", "https://localhost:443",
+              "http://127.0.0.1", "http://localhost",
+              "http://127.0.0.1:5000"])
 
 # Load different models
 # joblib is used to load a trained model so that the API can serve ML predictions
@@ -181,3 +185,5 @@ def predict_decision_tree_regressor():
 
 if __name__ == '__main__':
     app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(ssl_context=("cert.pem", "key.pem"), debug=True)
