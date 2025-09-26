@@ -22,9 +22,13 @@ COPY requirements.txt .
 ## Then remove them later to reduce image size.
 ## We also clean up apt cache to reduce image size.
 
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc \
+# RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc \
+#     && pip install --no-cache-dir -r requirements.txt \
+#     && apt-get purge -y --auto-remove build-essential gcc \
+#     && rm -rf /var/lib/apt/lists/
+
+RUN apt-get update \
     && pip install --no-cache-dir -r requirements.txt \
-    && apt-get purge -y --auto-remove build-essential gcc \
     && rm -rf /var/lib/apt/lists/
 
 # Copy the application code
