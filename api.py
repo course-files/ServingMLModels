@@ -186,8 +186,8 @@ def predict_decision_tree_regressor():
 #     -Body $body `
 #     -ContentType "application/json"
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
 # if __name__ == '__main__':
 #     app.run(debug=False)
 # if __name__ == "__main__":
