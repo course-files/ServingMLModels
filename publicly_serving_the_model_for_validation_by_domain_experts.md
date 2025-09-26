@@ -5,10 +5,17 @@ There are several free or freemium platforms and techniques that developers can 
 Domain experts can then use these platforms to validate the model and provide the developer with feedback before deploying the model in a production environment.
 
 Examples:
-1. **Hugging Face Spaces** - [https://huggingface.co/spaces](https://huggingface.co/spaces): Hugging Face provides a platform called "Spaces" where developers can host machine learning models and applications. It supports various frameworks like Gradio and Streamlit, making it easy to create interactive demos. Domain experts can access these demos via a web interface to test and validate the model's performance.
-2. **Streamlit Sharing** - [https://share.streamlit.io/](https://share.streamlit.io/): Streamlit provides a platform called "Sharing" where developers can host machine learning models and applications. It supports various frameworks like Gradio and Streamlit, making it easy to create interactive demos. Domain experts can also access these demos via a web interface to test and validate the model's performance.
-3. **Koyeb** - [https://koyeb.com/](https://koyeb.com/)
-4. **Heroku** - [https://www.heroku.com/](https://www.heroku.com/)
+1. **Hugging Face Spaces – https://huggingface.co/spaces**
+
+    Hugging Face offers a collaborative platform for hosting and sharing machine learning demos. Developers can deploy models easily using Gradio or Streamlit as frontends, with Hugging Face handling the hosting. It is particularly popular in the research and NLP communities because of its integration with the Hugging Face model hub. Domain experts can interact with the model through a simple web UI, making it ideal for quick prototyping and validation.
+
+2. **Streamlit Community Cloud (formerly Streamlit Sharing) – https://share.streamlit.io**
+
+    Streamlit’s official hosting platform allows developers to deploy Python applications directly from a GitHub repository. It is designed to be simple and developer-friendly, with automatic updates whenever the repository changes. Streamlit Sharing is well-suited for lightweight data apps, dashboards, and interactive ML demos. Domain experts can test models via a familiar, user-friendly Streamlit interface.
+
+3. **Render – https://render.com**
+
+    Render is a general-purpose cloud platform for deploying web applications and APIs. Unlike Hugging Face Spaces and Streamlit Sharing, which focus on demos, Render is closer to production-grade deployment. It supports Flask, FastAPI, and Django apps, making it **ideal for exposing a trained model as an API endpoint** (for Postman or integration with other systems). Render offers a free tier (with card verification), enabling developers to test ML APIs before moving to production.
 
 ## Hugging Face Spaces using a Gradio App
 Overall workflow:
@@ -77,7 +84,7 @@ This will create a new repository in your Hugging Face account.
 - View the prediction result
 - Share the Space URL with domain experts for validation and feedback. Example: [https://huggingface.co/spaces/course-files/customer-churn-demo](https://huggingface.co/spaces/course-files/customer-churn-demo)
 
-## Streamlit Sharing using a Streamlit App
+## Streamlit Community Cloud (Streamlit Sharing) using a Streamlit App
 Overall workflow:
 1. Create a Streamlit app
 2. Deploy the Streamlit app to Streamlit Sharing
@@ -138,12 +145,6 @@ if submitted:
 - View the prediction result
 - Share the Streamlit app URL with domain experts for validation and feedback. Example: [https://customer-churn-demo.streamlit.app/](https://customer-churn-demo.streamlit.app/)
 
-## Expected Challenges
-- Resource limits: On free tiers, memory, CPU, or disk are often significantly constrained. Large models or heavy inference might crash or be slow.
-- Cold starts or sleeping: Many free services “sleep” when idle; the first request after idle may suffer delay.
-- Public exposure: Many free services only allow public apps (not private), so your model and interface may be accessible by anyone.
-- Latency & reliability: Free tiers are not reliable for real-time or production use.
-
 ## Public API Access via Render
 
 Steps:
@@ -160,7 +161,7 @@ Steps:
 11. Select the "Free" plan "For hobby projects"
 12. Click "Deploy Web Service"
 13. Copy the URL of your service
-14. Use the URL + appropriate API endpoint to access your model.
+14. Use the URL + appropriate API endpoint to access your model. **Note:** Accessing the `Render` URL directly via a browswer will give you a `502: Server not found` error.
 
     Example 1: [https://customer-churn-demo.onrender.com/api/predict_decision_tree_classifier](https://customer-churn-demo.onrender.com/api/predict_decision_tree_classifier)
  
@@ -183,3 +184,9 @@ Steps:
         \"QuantityOrdered\": 8,
         \"PaymentDate\": \"2025-11-13\"}"
     ```
+
+## Expected Challenges
+- Resource limits: On free tiers, memory, CPU, or disk are often significantly constrained. Large models or heavy inference might crash or be slow.
+- Cold starts or sleeping: Many free services “sleep” when idle; the first request after idle may suffer delay.
+- Public exposure: Many free services only allow public apps (not private), so your model and interface may be accessible by anyone.
+- Latency & reliability: Free tiers are not reliable for real-time or production use.
