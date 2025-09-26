@@ -69,7 +69,7 @@ Refer to the files below for more details:
 3. [api_test_DT_classifier.html](frontend/api_test_DT_classifier.html)
 4. [api_test_DT_regressor.html](frontend/api_test_DT_regressor.html)
 5. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md)
-6. [Publicly Serving the Model for Validation by Domain Experts](huggingface_spaces_using_gradio.md)
+6. [Publicly Serving the Model for Validation by Domain Experts](publicly_serving_the_model_for_validation_by_domain_experts.md)
 
 ## Lab Submission Instructions
 
