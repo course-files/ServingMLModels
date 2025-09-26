@@ -17,6 +17,7 @@
 ├── Dockerfile.flask-gunicorn-app
 ├── Dockerfile.nginx
 ├── LICENSE
+├── Procfile
 ├── README.md
 ├── RecommendedCitation.bib
 ├── api.py
@@ -34,6 +35,9 @@
 │   ├── api_test_DT_classifier.html
 │   ├── api_test_DT_regressor.html
 │   └── index.html
+├── huggingface-spaces-using-gradio
+│   ├── app.py
+│   └── requirements.txt
 ├── lab_submission_instructions.md
 ├── model
 │   ├── decisiontree_classifier_baseline.pkl
@@ -49,11 +53,16 @@
 │   ├── scaler_4.pkl
 │   ├── scaler_5.pkl
 │   └── support_vector_classifier_optimum.pkl
+├── publicly_serving_the_model_for_validation_by_domain_experts.md
 ├── requirements.txt
 ├── rules
-└── setup_instructions.md
+├── runtime.txt
+├── setup_instructions.md
+└── streamlit-sharing-using-streamlit
+    ├── app.py
+    └── requirements.txt
 
-7 directories, 33 files
+9 directories, 40 files
 ```
 
 ## Setup Instructions
