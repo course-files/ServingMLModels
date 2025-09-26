@@ -5,15 +5,15 @@ There are several free or freemium platforms and techniques that developers can 
 Domain experts can then use these platforms to validate the model and provide the developer with feedback before the model is deployed in a production environment.
 
 Examples:
-1. **Hugging Face Spaces – https://huggingface.co/spaces**
+1. **Hugging Face Spaces – [https://huggingface.co/spaces](https://huggingface.co/spaces)**
 
     Hugging Face offers a collaborative platform for hosting and sharing machine learning demos. Developers can deploy models easily using Gradio or Streamlit as frontends, with Hugging Face handling the hosting. It is particularly popular in the research and NLP communities because of its integration with the Hugging Face model hub. Domain experts can interact with the model through a simple web UI, making it ideal for quick prototyping and validation.
 
-2. **Streamlit Community Cloud (formerly Streamlit Sharing) – https://share.streamlit.io**
+2. **Streamlit Community Cloud (formerly Streamlit Sharing) – [https://share.streamlit.io](https://share.streamlit.io)**
 
     Streamlit’s official hosting platform allows developers to deploy Python applications directly from a GitHub repository. It is designed to be simple and developer-friendly, with automatic updates whenever the repository changes. Streamlit Sharing is well-suited for lightweight data apps, dashboards, and interactive ML demos. Domain experts can test models via a familiar, user-friendly Streamlit interface.
 
-3. **Render – https://render.com**
+3. **Render – [https://dashboard.render.com/](https://dashboard.render.com/)**
 
     Render is a general-purpose cloud platform for deploying web applications and APIs. Unlike Hugging Face Spaces and Streamlit Sharing, which focus on demos, Render is closer to production-grade deployment. It supports Flask, FastAPI, and Django apps, making it **ideal for exposing a trained model as an API endpoint** (for Postman or integration with other systems). Render offers a free tier (with card verification), enabling developers to test ML APIs before moving to production.
 
