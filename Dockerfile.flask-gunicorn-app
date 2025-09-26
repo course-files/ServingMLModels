@@ -32,7 +32,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/
 
 # Copy the application code
-COPY . .
+# COPY . .
+COPY api.py .
+COPY requirements.txt .
+COPY model/ ./model/
+COPY rules/ ./rules/
 
 # This command runs a Flask app named “app”. App is defined in the file called api.py
 # It starts 4 workers which will be able to process 4 simultaneous requests
