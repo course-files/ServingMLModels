@@ -10,7 +10,7 @@ Examples:
 3. **Koyeb** - [https://koyeb.com/](https://koyeb.com/)
 4. **Heroku** - [https://www.heroku.com/](https://www.heroku.com/)
 
-## Hugging Face Spaces using Gradio
+## Hugging Face Spaces using a Gradio App
 Overall workflow:
 1. Create a Gradio app
 2. Deploy the Gradio app to Hugging Face Spaces
@@ -77,7 +77,7 @@ This will create a new repository in your Hugging Face account.
 - View the prediction result
 - Share the Space URL with domain experts for validation and feedback. Example: [https://huggingface.co/spaces/course-files/customer-churn-demo](https://huggingface.co/spaces/course-files/customer-churn-demo)
 
-## Streamlit Sharing using Streamlit
+## Streamlit Sharing using a Streamlit App
 Overall workflow:
 1. Create a Streamlit app
 2. Deploy the Streamlit app to Streamlit Sharing
@@ -143,3 +143,43 @@ if submitted:
 - Cold starts or sleeping: Many free services “sleep” when idle; the first request after idle may suffer delay.
 - Public exposure: Many free services only allow public apps (not private), so your model and interface may be accessible by anyone.
 - Latency & reliability: Free tiers are not reliable for real-time or production use.
+
+## Public API Access via Render
+
+Steps:
+1. Prepare your `requirements.txt` file to list all the required dependencies
+2. Create your `Procfile` so that render can use it to start your application
+3. Prepare your `api.py` file that contains the definition of the endpoints
+4. Push your changes to GitHub
+5. Go to [https://dashboard.render.com](https://dashboard.render.com)
+6. Click + New → Web Service 
+7. Connect your GitHub repository that has the code
+8. Select the branch (main). Render should auto-detect that you are using Python and Flask.
+9. Specify the name of your service
+10. Specify the start command as `gunicorn -w 4 -b 0.0.0.0:$PORT api:app` (assuming the Flask app is named `app` and is defined in `api.py`)
+11. Select the "Free" plan "For hobby projects"
+12. Click "Deploy Web Service"
+13. Copy the URL of your service
+14. Use the URL + appropriate API endpoint to access your model.
+
+    Example 1: [https://customer-churn-demo.onrender.com/api/predict_decision_tree_classifier](https://customer-churn-demo.onrender.com/api/predict_decision_tree_classifier)
+ 
+    Example 2: [https://customer-churn-demo.onrender.com/api/predict_decision_tree_regressor](https://customer-churn-demo.onrender.com/api/predict_decision_tree_regressor)
+
+    cURL example 1: 
+    ```shell
+    curl -X POST https://customer-churn-demo.onrender.com/api/predict_decision_tree_classifier \
+      -H "Content-Type: application/json" \
+      -d "{\"monthly_fee\": 60, \"customer_age\": 30, \"support_calls\": 1}"
+    ```
+
+    cURL example 2: 
+    ```shell
+    curl -X POST https://customer-churn-demo.onrender.com/api/predict_decision_tree_regressor \
+      -H "Content-Type: application/json" \
+      -d "{\"CustomerType\": \"Business\",
+        \"BranchSubCounty\": \"Kilimani\",
+        \"ProductCategoryName\": \"Meat-Based Dishes\",
+        \"QuantityOrdered\": 8,
+        \"PaymentDate\": \"2025-11-13\"}"
+    ```
