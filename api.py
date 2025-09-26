@@ -188,7 +188,7 @@ def predict_decision_tree_regressor():
 
 # if __name__ == '__main__':
 #     app.run(debug=True)
-# if __name__ == '__main__':
-#     app.run(debug=False)
+if __name__ == '__main__':
+    app.run(debug=False)
 # if __name__ == "__main__":
 #     app.run(ssl_context=("cert.pem", "key.pem"), debug=True)
