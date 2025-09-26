@@ -2,7 +2,7 @@
 
 There are several free or freemium platforms and techniques that developers can use to demo models (e.g., models saved as .pkl files).
 
-Domain experts can then use these platforms to validate the model and provide the developer with feedback before deploying the model in a production environment.
+Domain experts can then use these platforms to validate the model and provide the developer with feedback before the model is deployed in a production environment.
 
 Examples:
 1. **Hugging Face Spaces – https://huggingface.co/spaces**
