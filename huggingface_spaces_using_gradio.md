@@ -123,7 +123,7 @@ if submitted:
 
 ### Step 2: Deploy the Streamlit app to Streamlit Sharing
 - Create a Streamlit account if you do not have one - [https://share.streamlit.io/](https://share.streamlit.io/)
-- Create a new app (Click on the "Create App" link on the top right corner)
+- Create a new app (Click on the "Create App" link at the top right corner)
 - Select the "Deploy a public app from GitHub". This assumes that you have a GitHub repository with the Streamlit app.
 - Name the app
 - Specify the location of the `app.py` file in the GitHub repository
