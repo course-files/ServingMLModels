@@ -6,7 +6,7 @@ Domain experts can then use these platforms to validate the model and provide th
 
 Examples:
 1. **Hugging Face Spaces** - [https://huggingface.co/spaces](https://huggingface.co/spaces): Hugging Face provides a platform called "Spaces" where developers can host machine learning models and applications. It supports various frameworks like Gradio and Streamlit, making it easy to create interactive demos. Domain experts can access these demos via a web interface to test and validate the model's performance.
-2. **Streamlit Sharing** - [https://streamlit.io/](https://streamlit.io/): Streamlit provides a platform called "Sharing" where developers can host machine learning models and applications. It supports various frameworks like Gradio and Streamlit, making it easy to create interactive demos. Domain experts can also access these demos via a web interface to test and validate the model's performance.
+2. **Streamlit Sharing** - [https://share.streamlit.io/](https://share.streamlit.io/): Streamlit provides a platform called "Sharing" where developers can host machine learning models and applications. It supports various frameworks like Gradio and Streamlit, making it easy to create interactive demos. Domain experts can also access these demos via a web interface to test and validate the model's performance.
 3. **Koyeb** - [https://koyeb.com/](https://koyeb.com/)
 4. **Heroku** - [https://www.heroku.com/](https://www.heroku.com/)
 
@@ -76,6 +76,67 @@ This will create a new repository in your Hugging Face account.
 - Click the "Submit" button
 - View the prediction result
 - Share the Space URL with domain experts for validation and feedback. Example: [https://huggingface.co/spaces/course-files/customer-churn-demo](https://huggingface.co/spaces/course-files/customer-churn-demo)
+
+## Streamlit Sharing using Streamlit
+Overall workflow:
+1. Create a Streamlit app
+2. Deploy the Streamlit app to Streamlit Sharing
+3. Domain experts can access the Streamlit app via a web interface to test and validate the model's performance
+
+### Step 1: Create a Streamlit App (`app.py`)
+- Load your model and define how a prediction will be made. 
+- Build a Streamlit interface.
+
+Sample:
+```python
+import streamlit as st
+import joblib
+import numpy as np
+
+# Load the model
+model = joblib.load('model.pkl')
+
+# Create Streamlit interface
+st.set_page_config(
+    page_title="Title of the App",
+    page_icon="📊",
+    layout="centered"
+)
+
+st.title("Title of the App")
+st.write("Text to guide the user through the app.")
+
+# Sample streamlit input form
+with st.form("prediction_form"):
+    monthly_fee = st.number_input("Monthly Fee", min_value=0.0, step=1.0)
+    customer_age = st.number_input("Customer Age", min_value=0, step=1)
+    support_calls = st.number_input("Support Calls", min_value=0, step=1)
+
+    submitted = st.form_submit_button("Predict")
+
+# Sample prediction logic
+if submitted:
+    X = np.array([[monthly_fee, customer_age, support_calls]])
+    prediction = model.predict(X)
+    st.success(f"### Predicted Class: {int(prediction[0])}")
+```
+
+### Step 2: Deploy the Streamlit app to Streamlit Sharing
+- Create a Streamlit account if you do not have one - [https://share.streamlit.io/](https://share.streamlit.io/)
+- Create a new app (Click on the "Create App" link on the top right corner)
+- Select the "Deploy a public app from GitHub". This assumes that you have a GitHub repository with the Streamlit app.
+- Name the app
+- Specify the location of the `app.py` file in the GitHub repository
+- Specify a custom URL for the app
+- Click "Deploy"
+
+### Step 3: Access the Streamlit app via a Web Interface
+- Go to the Steamlit Share URL. This will be in the form of `https://<app_name>.streamlit.app/`
+- The Streamlit app will be launched in the browser tab once it automatically builds the Streamlit app.
+- Enter the input features
+- Click the "Predict" button
+- View the prediction result
+- Share the Streamlit app URL with domain experts for validation and feedback. Example: [https://customer-churn-demo.streamlit.app/](https://customer-churn-demo.streamlit.app/)
 
 ## Expected Challenges
 - Resource limits: On free tiers, memory, CPU, or disk are often significantly constrained. Large models or heavy inference might crash or be slow.
