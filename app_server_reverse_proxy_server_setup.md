@@ -72,20 +72,26 @@ In this lab, the deployment is done when the Nginx image is built and the update
 
 ## Step 2: Use Docker Compose
 
-The building of the images in the subsequent steps is done using the following Docker Compose file: [Docker-Compose.yaml](Docker-Compose.yaml). Execute the following to build the images and run the Docker containers:
+The building of the images in the subsequent steps is done using the following Docker Compose files: [docker-compose.yaml](docker-compose.yaml) followed by [docker-compose-dev.yaml](docker-compose-dev.yaml). Execute the following to build the images and run the Docker containers (this enables you to perform Step 3 and Step 4):
 
-`docker compose -f Docker-Compose.yaml up --scale flask-gunicorn-app=2 -d`
+```shell
+docker compose \
+  -f docker-compose.yaml \
+  -f docker-compose-dev.yaml \
+  up -d \
+  --scale flask-gunicorn-app=2
+```
 
 Docker Compose in turn access the following two Dockerfiles to build the required images:
 
-1. [Dockerfile.flask-gunicorn-app](Dockerfile.flask-gunicorn-app)
-2. [Dockerfile.nginx](Dockerfile.nginx)
+1. [Dockerfile.flask-gunicorn-app](images/Dockerfile.flask-gunicorn-app)
+2. [Dockerfile.nginx](images/Dockerfile.nginx)
 
 ## Step 3: Create the Application Server
 
 The application server is made up of **Gunicorn**, a Web-Server Gateway Interface (WSGI) application server.
 **Gunicorn** runs in a **Python** environment to access **Flask**. Flask serves the model trained using Python through an API.
-![Request Flow](frontend/RequestFlow.png)
+![Request Flow](frontend/RequestFlow.jpg)
 
 ## Step 4: Create the Reverse Proxy
 
@@ -101,3 +107,13 @@ A reverse proxy:
 - Shields backend servers from direct exposure to the internet (security).
 
 Build the following Dockerfile to create the NGINX web server that will be assigned the role of a reverse proxy: [Dockerfile.nginx](Dockerfile.nginx)
+
+## Step 5: Confirm your Setup
+
+You should be able to access the Nginx reverse proxy which is your web server, using HTTPS via [https://127.0.0.1/](https://127.0.0.1/)
+
+**Use [https://127.0.0.1/](https://127.0.0.1/)** and NOT [https://localhost/](https://localhost/) because the API endpoint is served to the frontend through [https://127.0.0.1/api/](https://127.0.0.1/api/)
+
+The following warning is expected in our development environment used for learning, as explained in Step 2 above (using self-signed certificates), therefore, click "Proceed to localhost (unsafe)".
+
+![https_localhost](assets/images/https_localhost.png)
