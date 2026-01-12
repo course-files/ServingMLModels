@@ -1,50 +1,60 @@
 # Lab Submission Instructions: BBT 4206 - CAT 1 (Takeaway) - Due Date: 30th September 2025
 
-## Student Details
+## Student Details and Individual Member Contributions
 
 **Name of the team on GitHub Classroom:**
 
-**Team Member Contributions**
+**Member 1:**
 
-**Member 1**
+| **Details**                                                                                                                           | **Comment** |
+|:--------------------------------------------------------------------------------------------------------------------------------------|:------------|
+| **Student ID**                                                                                                                        |             |
+| **Name**                                                                                                                              |             |
+| **What part of the lab did you personally<br/>contribute to (provide a link to the<br/>branch(es)), and what did you learn from it?** |             |
 
-| **Details**                                                                                        | **Comment** |
-|:---------------------------------------------------------------------------------------------------|:------------|
-| **Student ID**                                                                                     |             |
-| **Name**                                                                                           |             |
-| **What part of the lab did you personally contribute to,** <br>**and what did you learn from it?** |             |
+**Member 2:**
 
-**Member 2**
+| **Details**                                                                                                                           | **Comment** |
+|:--------------------------------------------------------------------------------------------------------------------------------------|:------------|
+| **Student ID**                                                                                                                        |             |
+| **Name**                                                                                                                              |             |
+| **What part of the lab did you personally<br/>contribute to (provide a link to the<br/>branch(es)), and what did you learn from it?** |             |
 
-| **Details**                                                                                        | **Comment** |
-|:---------------------------------------------------------------------------------------------------|:------------|
-| **Student ID**                                                                                     |             |
-| **Name**                                                                                           |             |
-| **What part of the lab did you personally contribute to,** <br>**and what did you learn from it?** |             |
+**Member 3:**
 
-**Member 3**
+| **Details**                                                                                                                           | **Comment** |
+|:--------------------------------------------------------------------------------------------------------------------------------------|:------------|
+| **Student ID**                                                                                                                        |             |
+| **Name**                                                                                                                              |             |
+| **What part of the lab did you personally<br/>contribute to (provide a link to the<br/>branch(es)), and what did you learn from it?** |             |
 
-| **Details**                                                                                        | **Comment** |
-|:---------------------------------------------------------------------------------------------------|:------------|
-| **Student ID**                                                                                     |             |
-| **Name**                                                                                           |             |
-| **What part of the lab did you personally contribute to,** <br>**and what did you learn from it?** |             |
+**Member 4:**
 
-**Member 4**
+| **Details**                                                                                                                           | **Comment** |
+|:--------------------------------------------------------------------------------------------------------------------------------------|:------------|
+| **Student ID**                                                                                                                        |             |
+| **Name**                                                                                                                              |             |
+| **What part of the lab did you personally<br/>contribute to (provide a link to the<br/>branch(es)), and what did you learn from it?** |             |
 
-| **Details**                                                                                        | **Comment** |
-|:---------------------------------------------------------------------------------------------------|:------------|
-| **Student ID**                                                                                     |             |
-| **Name**                                                                                           |             |
-| **What part of the lab did you personally contribute to,** <br>**and what did you learn from it?** |             |
+**Member 5:**
 
-**Member 5**
+| **Details**                                                                                                                           | **Comment** |
+|:--------------------------------------------------------------------------------------------------------------------------------------|:------------|
+| **Student ID**                                                                                                                        |             |
+| **Name**                                                                                                                              |             |
+| **What part of the lab did you personally<br/>contribute to (provide a link to the<br/>branch(es)), and what did you learn from it?** |             |
 
-| **Details**                                                                                        | **Comment** |
-|:---------------------------------------------------------------------------------------------------|:------------|
-| **Student ID**                                                                                     |             |
-| **Name**                                                                                           |             |
-| **What part of the lab did you personally contribute to,** <br>**and what did you learn from it?** |             |
+## Level of Difficulty
+
+**Specify the chosen level of difficulty** (baseline, intermediate, or advanced):
+
+## Video Demonstration
+
+Submit the link to a short video (not more than 8 minutes) demonstrating the use of the API. Please ensure that the lecturer has rights to view the video.
+
+Note that you are required to submit the link to the video and NOT the video itself. The video should NOT be uploaded in your repository.
+
+**Link to the video:**
 
 ## Scenario
 
@@ -124,16 +134,17 @@ When you run the container, it behaves like a lightweight server.
   - Isolation: your app runs in its own environment, safe from system changes.
   - Scalability: you can run more containers if you need more capacity.
 
-### Video Demonstration
-
-For all the three levels, submit the link to a short video (not more than 8 minutes) demonstrating the use of the API.
-
-| **Key**                | **Value** |
-|:-----------------------|:----------|
-| **Link to the video:** |           |
-
 ### Grading Approach
 
-- Baseline = Pass >= 60%
-- Intermediate = Merit 75–85%
-- Advanced = Distinction >= 86%
+The lab will be marked out of 10 marks.
+
+- Exceeding Expectations: 9–10 marks
+- Meeting Expectations: 6–8 marks
+- Approaching Expectations: 3–5 marks
+- Below Expectations: 0–2 marks
+
+The marks depend on the chosen level of difficulty such that:
+
+- Advanced (Distinction) >= 8.6 marks
+- Intermediate (Merit) 7.5–8.5 marks
+- Baseline (Pass) >= 6 marks
