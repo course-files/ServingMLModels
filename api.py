@@ -17,11 +17,23 @@ import joblib
 import pandas as pd
 
 app = Flask(__name__)
-CORS(app, supports_credentials=False,
-     origins=["https://127.0.0.1", "https://localhost",
-              "https://127.0.0.1:443", "https://localhost:443",
-              "http://127.0.0.1", "http://localhost",
-              "http://127.0.0.1:5000"])
+CORS(
+    app,
+    resources={r"/api/*": {
+        "origins": [
+            "https://127.0.0.1",
+            "https://localhost"
+        ]
+    }},
+    methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"]
+)
+
+# CORS(app, supports_credentials=False,
+#      origins=["https://127.0.0.1", "https://localhost",
+#               "https://127.0.0.1:443", "https://localhost:443",
+#               "http://127.0.0.1", "http://localhost",
+#               "http://127.0.0.1:5000", "http://127.0.0.1:5500"])
 
 # CORS(app, supports_credentials=False,
 #      origins=["*"])
