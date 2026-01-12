@@ -1,4 +1,0 @@
-FROM nginx:latest
-
-# Copy frontend into container
-COPY frontend/ /usr/share/nginx/html/
