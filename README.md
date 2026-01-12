@@ -14,22 +14,26 @@
 ```text
 .
 ├── Docker-Compose.yaml
-├── Dockerfile.flask-gunicorn-app
-├── Dockerfile.nginx
 ├── LICENSE
 ├── Procfile
 ├── README.md
 ├── RecommendedCitation.bib
 ├── api.py
 ├── app_server_reverse_proxy_server_setup.md
+├── assets
+│   └── images
+│       └── https_localhost.png
 ├── container-volumes
 │   └── nginx
 │       ├── certs
 │       │   ├── selfsigned.crt
 │       │   └── selfsigned.key
 │       └── nginx.conf
+├── docker-compose-dev.yaml
+├── docker-compose-prod.yaml
 ├── frontend
 │   ├── Proxies.png
+│   ├── RequestFlow.jpg
 │   ├── RequestFlow.png
 │   ├── api_consumer.py
 │   ├── api_test_DT_classifier.html
@@ -38,6 +42,9 @@
 ├── huggingface-spaces-using-gradio
 │   ├── app.py
 │   └── requirements.txt
+├── images
+│   ├── Dockerfile.flask-gunicorn-app
+│   └── Dockerfile.nginx
 ├── lab_submission_instructions.md
 ├── model
 │   ├── decisiontree_classifier_baseline.pkl
@@ -62,7 +69,7 @@
     ├── app.py
     └── requirements.txt
 
-9 directories, 40 files
+12 directories, 44 files
 ```
 
 ## Setup Instructions
