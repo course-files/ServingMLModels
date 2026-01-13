@@ -44,17 +44,19 @@
 | **Name**                                                                                                                              |             |
 | **What part of the lab did you personally<br/>contribute to (provide a link to the<br/>branch(es)), and what did you learn from it?** |             |
 
-## Level of Difficulty
+## Chosen Level of Difficulty
 
 **Specify the chosen level of difficulty** (baseline, intermediate, or advanced):
 
 ## Video Demonstration
 
-Submit the link to a short video (not more than 8 minutes) demonstrating the use of the API. Please ensure that the lecturer has rights to view the video.
+Submit the link to a short video (not more than 5 minutes) demonstrating the use of the API. Please ensure that the lecturer has rights to view the video.
 
-Note that you are required to submit the link to the video and NOT the video itself. The video should NOT be uploaded in your repository.
+Note that you are required to submit the link to the video and NOT the video itself. The video should NOT be uploaded to your repository—that would be a misuse of GitHub.
 
 **Link to the video:**
+
+---
 
 ## Scenario
 
