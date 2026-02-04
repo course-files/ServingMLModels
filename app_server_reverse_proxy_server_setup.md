@@ -135,7 +135,17 @@ The CA then signs your CSR. This produces a certificate (`yourdomain.crt`) that 
 
 The difference is that browsers trust your public certificate because they already trust the CA.
 
-You can then deploy the certificate + private key in Nginx
+### Deploy the certificate + private key in Nginx
+
+You can then deploy the certificate + private key in Nginx.
+
+This means, copy the following created files:
+
+- `container-volumes\ubuntu\home-student\certs\selfsigned.crt` and 
+- `container-volumes\ubuntu\home-student\certs\selfsigned.key`
+
+to `container-volumes\nginx\certs`.
+
 Example in nginx.conf:
 
 ```config
@@ -157,7 +167,7 @@ docker compose \
   --scale flask-gunicorn-app=2
 ```
 
-Docker Compose in turn access the following two Dockerfiles to build the required images:
+Docker Compose in turn accesses the following two Dockerfiles to build the required images:
 
 1. [Dockerfile.flask-gunicorn-app](images/Dockerfile.flask-gunicorn-app)
 2. [Dockerfile.nginx](images/Dockerfile.nginx)
@@ -176,12 +186,12 @@ The reverse proxy is made up of the **NGINX** web server.
 A reverse proxy:
 
 - Terminates SSL (handles HTTPS).
-- Routes requests to the right backend service (`/api` → Gunicorn, `/static` → static web files).
+- Routes requests to the right backend service (e.g., `/api` → Gunicorn, `/static` → static web files).
 - Load balances between multiple backend instances.
 - Caches responses (e.g., static images, JSON).
 - Shields backend servers from direct exposure to the internet (security).
 
-Build the following Dockerfile to create the NGINX web server that will be assigned the role of a reverse proxy: [Dockerfile.nginx](Dockerfile.nginx)
+The Docker Compose command in **Step 2** builds the following Dockerfile to create the NGINX web server that will be assigned the role of a **reverse proxy**: [Dockerfile.nginx](Dockerfile.nginx)
 
 ## Step 5: Confirm your Setup
 

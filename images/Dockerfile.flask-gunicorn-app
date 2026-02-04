@@ -4,8 +4,8 @@ FROM python:3.13.11-slim
 # Set a working directory inside the container
 WORKDIR /app
 
-# Copy requirements first (better caching)
-COPY requirements.txt .
+# Copy the requirements first
+COPY requirements ./requirements/
 
 # Install system dependencies as needed
 
@@ -28,13 +28,12 @@ COPY requirements.txt .
 #     && rm -rf /var/lib/apt/lists/
 
 RUN apt-get update \
-    && pip install --no-cache-dir -r requirements.txt \
-    && rm -rf /var/lib/apt/lists/
+    && pip install --no-cache-dir -r requirements/prod.txt \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy the application code
 # COPY . .
 COPY api.py .
-COPY requirements.txt .
 COPY model/ ./model/
 COPY rules/ ./rules/
 
@@ -42,4 +41,10 @@ COPY rules/ ./rules/
 # It starts 4 workers which will be able to process 4 simultaneous requests
 # Rule of thumb: Set workers ≈ 2 × CPU cores in a production setting.
 
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "api:app"]
+# The following command runs a Flask app named “app”. App is defined in the file called api.py
+    # It starts 5 worker processes each capable of handling one request at a time by default
+    # The application is bound to listen for connections on all the servers' IP addresses on port 8000
+# The standard recommendation for determining the number of worker processes is:
+# (2 x number_of_cores) + 1
+
+CMD ["gunicorn", "-w", "5", "-b", "0.0.0.0:8000", "api:app"]
