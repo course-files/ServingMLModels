@@ -17,23 +17,24 @@ import joblib
 import pandas as pd
 
 app = Flask(__name__)
-CORS(
-    app,
-    resources={r"/api/*": {
-        "origins": [
-            "https://127.0.0.1",
-            "https://localhost"
-        ]
-    }},
-    methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"]
-)
+# CORS(
+#     app,
+#     resources={r"/api/*": {
+#         "origins": [
+#             "https://127.0.0.1",
+#             "https://localhost"
+#         ]
+#     }},
+#     methods=["GET", "POST", "OPTIONS"],
+#     allow_headers=["Content-Type"]
+# )
 
-# CORS(app, supports_credentials=False,
-#      origins=["https://127.0.0.1", "https://localhost",
-#               "https://127.0.0.1:443", "https://localhost:443",
-#               "http://127.0.0.1", "http://localhost",
-#               "http://127.0.0.1:5000", "http://127.0.0.1:5500"])
+CORS(app, supports_credentials=False,
+     origins=["https://127.0.0.1", "https://localhost",
+              "https://127.0.0.1:443", "https://localhost:443",
+              "http://127.0.0.1", "http://localhost",
+              "http://localhost:5000", "http://127.0.0.1:5000",
+              "http://localhost:5500", "http://127.0.0.1:5500"])
 
 # CORS(app, supports_credentials=False,
 #      origins=["*"])
@@ -66,7 +67,7 @@ def predict_decision_tree_classifier():
     # Reorder and select only the expected columns
     new_data = new_data[expected_features]
 
-    # Performs a prediction using a trained machine learning model
+    # Performs a prediction using the already trained machine learning model
     prediction = decisiontree_classifier_baseline.predict(new_data)[0]
     
     # Returns the result as a JSON response:
@@ -129,10 +130,10 @@ def predict_decision_tree_regressor():
             new_data[col] = label_encoders_1b[col].transform(new_data[col])
 
     # Feature engineering for date
-    new_data['PaymentDate_year'] = new_data['PaymentDate'].dt.year
-    new_data['PaymentDate_month'] = new_data['PaymentDate'].dt.month
-    new_data['PaymentDate_day'] = new_data['PaymentDate'].dt.day
-    new_data['PaymentDate_dayofweek'] = new_data['PaymentDate'].dt.dayofweek
+    new_data['PaymentDate_year'] = new_data['PaymentDate'].dt.year # type: ignore
+    new_data['PaymentDate_month'] = new_data['PaymentDate'].dt.month # type: ignore
+    new_data['PaymentDate_day'] = new_data['PaymentDate'].dt.day # type: ignore
+    new_data['PaymentDate_dayofweek'] = new_data['PaymentDate'].dt.dayofweek # type: ignore
     new_data = new_data.drop(columns=datetime_columns)
 
     # Define the expected feature order (based on the order used during training)
@@ -198,6 +199,19 @@ def predict_decision_tree_regressor():
 #     -Body $body `
 #     -ContentType "application/json"
 
+# This ensures the Flask web server only starts when you run this file directly
+# (e.g., `python api.py`), and not if you import api.py from another script or test.
+
+# __name__ is a special variable in Python. When you run a script directly,
+# __name__ is set to '__main__'. If the script is imported, __name__ is set to
+# the module's name.
+
+# if __name__ == '__main__': checks if the script is being run directly.
+
+# app.run(debug=True) starts the Flask development server with debugging enabled.
+# This means:
+## The server will automatically reload if you make code changes.
+## You get detailed error messages in the browser if something goes wrong.
 if __name__ == '__main__':
     app.run(debug=True)
 # if __name__ == '__main__':
