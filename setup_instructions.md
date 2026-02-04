@@ -130,14 +130,14 @@ dependencies isolated from the system Python packages.
    - Since the virtual environment was already created, you will see the message ".venv already exists in the specified folder".
    - Therefore, choose "Select Existing Environment".
    - In the next window, specify the path that points to the ".venv" folder inside your project directory.
-   ![img.png](https://raw.githubusercontent.com/course-files/homelab/0f4ddf1ebc3c698d1382033ea47c14dc7688627a/assets/images/activate_venv_pycharm.png)
+   ![img.png](https://raw.githubusercontent.com/course-files/classlab/refs/heads/main/assets/images/activate_venv_pycharm.png)
 
    **B. If using VS Code**
 
      - Go to Settings > Command Palette.
      - Type "Python: Select Interpreter" and select it.
      - Choose the interpreter that points to your `.venv` folder.
-     ![img.png](https://raw.githubusercontent.com/course-files/homelab/0f4ddf1ebc3c698d1382033ea47c14dc7688627a/assets/images/activate_venv_vscode.png)
+     ![img.png](https://raw.githubusercontent.com/course-files/classlab/refs/heads/main/assets/images/activate_venv_vscode.png)
 
 4. Set the correct environment by creating a `.env` file in the root of the repository. Add the values of the variables listed in [.env.example](.env.example) as discussed in class:
 
