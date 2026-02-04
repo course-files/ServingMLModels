@@ -9,7 +9,8 @@ response = requests.get('https://api.stackexchange.com/2.3/questions?order=desc&
 # print(response.json()['items'])
 
 for data in response.json()['items']:
-    print(data['title'])
-    print(data['link'])
-    print(data['answer_count'])
-    print()
+    print('=' * 50)
+    print('Title: ', data['title'])
+    print('Link: ', data['link'])
+    print('Answer Count: ', data['answer_count'])
+    print('=' * 50, '\n')
