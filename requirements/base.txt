@@ -1,0 +1,7 @@
+# requirements/base.txt
+requests
+numpy
+pandas
+scikit-learn
+matplotlib
+joblib
