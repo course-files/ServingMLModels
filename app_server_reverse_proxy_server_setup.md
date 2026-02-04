@@ -2,26 +2,103 @@
 
 ## Step 1: Create a Self-Signed Private Key and Public Certificate for HTTPS
 
-Git Bash is installed together with various UNIX utilities. One of these utilities is **OpenSSL**.
-Execute the following **in a Git Bash terminal** to confirm that you have OpenSSL installed:
+**OpenSSL is a cryptographic library that developers embed into applications to implement secure protocols**—it provides the encryption engine for HTTPS, email security, VPNs, and certificate management, **but it does not provide connectivity itself**.
+
+**OpenSSH is a complete suite of tools for secure remote access and file transfer**—it handles logins, file copying, tunneling, and port forwarding between machines, using its own independent cryptographic implementation (though it can also be configured to work with OpenSSL).
+
+**In essence:** **OpenSSL** is the cryptographic toolkit that secures data in transit across various protocols, while **OpenSSH** is the connectivity toolset that secures remote machine access and operations—they serve different purposes, operate independently, and are not dependent on one another despite occasional integration.
+
+Analogy: OpenSSL answers, "How do I encrypt this data?" while OpenSSH answers "How do I securely reach that machine?"
 
 ```shell
-openssl --version
+docker exec -it --user student customized-ubuntu-server-smm bash
 ```
 
-If you do not have OpenSSL, re-install Git Bash from here: [https://git-scm.com/downloads](https://git-scm.com/downloads)
+<p align="left">
 
-Run the following command in the **Git Bash** terminal to generate the public certificate using OpenSSL:
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" width="40" />
+</p>
+
+### Install OpenSSL in Linux
+
+Most Linux distributions ship with OpenSSL by default because system utilities depend on it. However, assuming that there is no OpenSSL installed, below are the installation steps in a Linux Server (Ubuntu server).
+
+Execute:
 
 ```shell
-cd container-volumes/nginx
-mkdir certs
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+sudo apt update
+sudo apt install openssl
+```
+
+Verify installation:
+
+```shell
+openssl version
+which openssl
+```
+
+---
+
+### Create a minimal OpenSSL config
+
+Execute:
+
+```shell
+vim /home/student/openssl.cnf
+```
+
+Press `i` for **Insert Mode** in `vim` and paste the following inside the openssl.cnf file:
+
+```text
+[ req ]
+default_bits       = 2048
+prompt             = no
+default_md         = sha256
+x509_extensions    = v3_req
+distinguished_name = dn
+
+[ dn ]
+C  = KE
+ST = Nairobi
+L  = Nairobi
+O  = Teaching Lab
+OU = IT Department
+CN = localhost
+
+[ v3_req ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = localhost
+DNS.2 = customized-ubuntu-server-smm
+IP.1  = 127.0.0.1
+```
+
+Press `Esc` and then type `:wq` to write the changes to the file and quit `Vim`.
+
+### Generate the public certificate using OpenSSL
+
+Execute:
+
+```shell
+mkdir /home/student/certs
+```
+
+Run the following command in the bash terminal to generate the public certificate using OpenSSL:
+
+```shell
+openssl req -x509 -nodes -days 90 \
+  -newkey rsa:2048 \
   -keyout certs/selfsigned.key \
-  -out certs/selfsigned.crt
+  -out certs/selfsigned.crt \
+  -config /home/student/openssl.cnf
 ```
 
-Answer the prompts that follow as you see fit.
+Confirm that the certificate has been created:
+
+```shell
+ls -al /home/student/certs/
+```
 
 The command does the following 2 tasks:
 
@@ -45,18 +122,16 @@ Anyone could generate a certificate for localhost or even google.com if it is se
 
 2. With a Trusted Certificate Authority (real-world setup)
 You create a Certificate Signing Request (CSR)
-This file contains your domain name (e.g., yourdomain.co.ke) and your public key.
+This file contains your domain name (e.g., `yourdomain.co.ke`) and your public key.
 You generate the public key from your private key.
 You then send the CSR to a Certificate Authority (CA)
 
 Examples of CAs: Let’s Encrypt (free), DigiCert, GlobalSign, etc.
 
-The CA confirms that you actually own yourdomain.co.ke.
-With Let’s Encrypt, this happens automatically by proving DNS or serving a token via HTTP.
+The CA confirms that you actually own `yourdomain.co.ke`.
 
-The CA then signs your CSR
-This produces a certificate (yourdomain.crt) that says:
-“The CA vouches that the owner of this public key really controls yourdomain.co.ke.”
+The CA then signs your CSR. This produces a certificate (`yourdomain.crt`) that says:
+“The CA vouches that the owner of this public key really owns `yourdomain.co.ke`.”
 
 The difference is that browsers trust your public certificate because they already trust the CA.
 
