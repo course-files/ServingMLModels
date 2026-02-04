@@ -4,10 +4,18 @@
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Course Codes** | BBT 4206                                                                                                                                                                                                                                                                                  |
 | **Course Names** | BBT 4206: Business Intelligence II (Week 4-6 of 13)                                                                                                                                                                                                                                       |
-| **Semester**     | August to November 2025                                                                                                                                                                                                                                                                   |
+| **Semester**     | January to April 2026                                                                                                                                                                                                                                                                   |
 | **Lecturer**     | Allan Omondi                                                                                                                                                                                                                                                                              |
 | **Contact**      | aomondi@strathmore.edu                                                                                                                                                                                                                                                                    |
 | **Note**         | The lecture contains both theory and practice.<br/>This notebook forms part of the practice.<br/>It is intended for educational purposes only.<br/>Recommended citation: [BibTex](https://raw.githubusercontent.com/course-files/ServingMLModels/refs/heads/main/RecommendedCitation.bib) |
+
+## Technology Stack
+
+<p align="left">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width="40"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original-wordmark.svg" width="40"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" width="40"/>
+</p>
 
 ## Repository Structure
 

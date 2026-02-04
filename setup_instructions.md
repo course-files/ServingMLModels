@@ -1,8 +1,8 @@
-# The Virtual Environment (`.venv`) and the List of Packages File (`requirements.txt`)
+# The Virtual Environment (`.venv`) and the List of Dependencies Folder (`./requirements`)
 
 ## Project Setup Instructions
 
-### Install all the packages listed in `requirements.txt` in a virtual environment
+### Install all the dependencies listed in the `requirements` folder depending on the environment
 
 1. Confirm that you have Python installed. You can check this by running:
 
@@ -130,44 +130,57 @@ dependencies isolated from the system Python packages.
    - Since the virtual environment was already created, you will see the message ".venv already exists in the specified folder".
    - Therefore, choose "Select Existing Environment".
    - In the next window, specify the path that points to the ".venv" folder inside your project directory.
-   ![img.png](assets/images/activate_venv_pycharm.png)
+   ![img.png](https://raw.githubusercontent.com/course-files/homelab/0f4ddf1ebc3c698d1382033ea47c14dc7688627a/assets/images/activate_venv_pycharm.png)
 
    **B. If using VS Code**
 
      - Go to Settings > Command Palette.
      - Type "Python: Select Interpreter" and select it.
      - Choose the interpreter that points to your `.venv` folder.
-     ![img.png](assets/images/activate_venv_vscode.png)
+     ![img.png](https://raw.githubusercontent.com/course-files/homelab/0f4ddf1ebc3c698d1382033ea47c14dc7688627a/assets/images/activate_venv_vscode.png)
 
-4. Install the required packages depending on the environment:
+4. Set the correct environment by creating a `.env` file in the root of the repository. Add the values of the variables listed in [.env.example](.env.example) as discussed in class:
+
+5. Install the required packages depending on the environment:
     - [base.txt](requirements/base.txt): Defines the fundamental packages that the code in the repository needs to be installed for it to run. It is: Environment-agnostic, developer-curated, stable, and minimal.
     - [dev.txt](requirements/dev.txt): Defines what a developer needs to work productively and safely. It can include linters, formatters, test frameworks, and interactive tools. It should not include platform-specific constraints or deployment-only dependencies.
     - [colab.txt](requirements/colab.txt): It is platform-specific for Google Colab. It specifies the adjustments required when you are running the notebook in Colab, e.g., packages that are not included in Colab by default, and compatibility pins to avoid breaking Colab.
     - [prod.txt](requirements/prod.txt): Defines what must be installed in a production environment. It includes runtime frameworks (TensorFlow).
     - Governing Rule: If the application code imports it to run, it belongs in base.txt. If only a developer uses it to think, test, or explore, it belongs in dev.txt.
 
-    - Run one of the following depending on your environment once the virtual environment is active:
+    - Run one of the following depending on your environment once the virtual environment is active (**Note:** you should be using a "development" environment to do the lab):
   
-      - Development environment (local or Codespaces) with constraints to specific versions:
-
-        ```shell
-        pip install -r requirements/dev.txt -c requirements/constraints.txt
-
-        ```
-
-      - Google Colab environment:
-
-        ```shell
-        %pip install -r requirements/colab.txt
-        ```
-
       - Production environment:
 
         ```shell
         pip install -r requirements/prod.txt
         ```
 
-5. You can confirm the installed packages using:
+      - Staging environment:
+
+        ```shell
+        pip install -r requirements/dev.txt -c requirements/constraints.txt
+        ```
+
+      - Testing environment:
+
+        ```shell
+        pip install -r requirements/dev.txt -c requirements/constraints.txt
+        ```
+
+      - Colab environment:
+
+        ```shell
+        pip install -r requirements/colab.txt
+        ```
+
+      - Development environment:
+
+        ```shell
+        pip install -r requirements/dev.txt -c requirements/constraints.txt
+        ```
+
+6. You can confirm the installed packages using:
 
    ```shell
    pip list
@@ -185,7 +198,7 @@ dependencies isolated from the system Python packages.
 tree -I ".venv|__pycache__|roughwork|lab_submission_ANSWERS"
 ```
 
-## Creating the `requirements.txt` File
+## Creating a `requirements.txt` File
 
 - The `requirements.txt` file is used for listing packages
 (installable units via `pip`). Those packages usually contain the libraries you actually import and use.
