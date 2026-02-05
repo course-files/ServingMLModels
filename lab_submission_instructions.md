@@ -1,4 +1,6 @@
-# Lab Submission Instructions: BBT 4206 - CAT 1 (Takeaway) - Due Date: 30th September 2025
+# Lab Submission Instruction
+
+## BBT 4206 - CAT 1 (Takeaway) - Due Date: 28th February 2026
 
 ## Student Details and Individual Member Contributions
 
@@ -48,6 +50,10 @@
 
 **Specify the chosen level of difficulty** (baseline, intermediate, or advanced):
 
+## Public URL
+
+**Specify the public URL to the Gradio/Streamlit App**:
+
 ## Video Demonstration
 
 Submit the link to a short video (not more than 5 minutes) demonstrating the use of the API. Please ensure that the lecturer has rights to view the video.
@@ -91,7 +97,7 @@ This API can be used by systems developed by other teams in the organization usi
   - A recommender that recommends products to a client based on the association rules created in the previous lab. The association rules should be loaded from disk.
   - A classifier that predicts the cluster to which a client belongs to. The classifier should be loaded from disk.
 
-**Note 1:** **`api.py` is NOT production-grade as it is.** It is only meant for demonstration purposes. 
+**Note 1:** **`api.py` is NOT production-grade as it is.** It is only meant for demonstration purposes.
 Scalability and security must be taken into consideration before deploying an API in a production environment.
 
 **Note 2:** Students often treat the API as an afterthought, focusing only on training ML models.
@@ -117,7 +123,7 @@ The "hidden" learning here is that the delivery mechanism (API design, usability
 
 - Update [api.py](api.py) to include end-points to serve the following:
   - A classifier that predicts the cluster to which a client belongs to
-- Create a web page(s) (HTML and JavaScript) that demonstrates the use of the API
+- Create a web page(s) (Basic HTML, CSS, and Vanilla JavaScript) that demonstrates the use of the API
 - Implement basic error handling (e.g., missing inputs).
 - Flask comes with a development server (good for testing in development, bust unsafe for production).
 In production, you need a server that can handle many users, concurrency, and failures. That is where **Gunicorn** comes in. It is a Web Server Gateway Interface (WSGI) server built for production.
@@ -135,6 +141,10 @@ When you run the container, it behaves like a lightweight server.
   - Consistency: no “but it works on my machine” problems.
   - Isolation: your app runs in its own environment, safe from system changes.
   - Scalability: you can run more containers if you need more capacity.
+
+**For all 3 levels (baseline, intermediate, and advanced):**
+
+- Host any one of the models publicly as either a Gradio app on Hugging Face Spaces or a Streamlit App on Streamlit Community Cloud.
 
 ### Grading Approach
 
