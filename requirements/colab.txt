@@ -1,11 +1,10 @@
 # requirements/colab.txt
--r https://raw.githubusercontent.com/course-files/ClusteringandAssociationRuleMining/refs/heads/main/requirements/base.txt
+-r https://raw.githubusercontent.com/course-files/ServingMLModels/refs/heads/main/requirements/base.txt
 
 # Colab compatibility
 numpy<2.2
-# pillow<12
 
 # Colab-only additions
 # tensorflow
 # opencv-python
-# gradio
+gradio

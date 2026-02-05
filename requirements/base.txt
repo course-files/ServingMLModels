@@ -1,7 +1,5 @@
 # requirements/base.txt
-requests
+Requests
 numpy
 pandas
-scikit-learn
-matplotlib
 joblib
