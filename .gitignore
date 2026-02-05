@@ -210,3 +210,4 @@ __marimo__/
 /container-volumes/nginx/certs
 /container-volumes/ubuntu/home-student
 /roughwork
+/.devcontainer
