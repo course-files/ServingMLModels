@@ -13,15 +13,15 @@ def predict(monthly_fee, customer_age, support_calls):
 
 # Build Gradio interface
 demo = gr.Interface(
+    title="Customer Churn Prediction",
+    description="Predict whether a customer will churn using a Decision Tree Classifier.",
     fn=predict,
     inputs=[
         gr.Number(label="Monthly Fee"),
         gr.Number(label="Customer Age"),
         gr.Number(label="Support Calls")
     ],
-    outputs=gr.Number(label="Predicted Class"),
-    title="Customer Churn Prediction",
-    description="Predict whether a customer will churn using a Decision Tree Classifier."
+    outputs=gr.Number(label="Predicted Class")
 )
 
 if __name__ == "__main__":
