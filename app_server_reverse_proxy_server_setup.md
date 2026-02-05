@@ -10,14 +10,28 @@
 
 Analogy: OpenSSL answers, "How do I encrypt this data?" while OpenSSH answers "How do I securely reach that machine?"
 
+### Create the Linux (Ubuntu) Server Container
+
+<p align="left">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" width="40" />
+</p>
+
+Create the following folders which will be mapped to the container volumes:
+
+- `container-volumes\nginx\certs`
+- `container-volumes\ubuntu\home-student`
+
+Execute the following command in the terminal to build the Linux (Ubuntu) Server image and then use it to create the container:
+
+```shell
+docker compose up ubuntu-server
+```
+
+And then execute the following to access the bash terminal inside the container:
+
 ```shell
 docker exec -it --user student customized-ubuntu-server-smm bash
 ```
-
-<p align="left">
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" width="40" />
-</p>
 
 ### Install OpenSSL in Linux
 
@@ -59,9 +73,9 @@ distinguished_name = dn
 
 [ dn ]
 C  = KE
-ST = Nairobi
+ST = Nairobi County
 L  = Nairobi
-O  = Teaching Lab
+O  = Class Lab
 OU = IT Department
 CN = localhost
 
@@ -195,7 +209,7 @@ The Docker Compose command in **Step 2** builds the following Dockerfile to crea
 
 ## Step 5: Confirm your Setup
 
-You should be able to access the Nginx reverse proxy which is your web server, using HTTPS via [https://127.0.0.1/](https://127.0.0.1/)
+You should now be able to access the Nginx reverse proxy which is your web server, using HTTPS via [https://127.0.0.1/](https://127.0.0.1/)
 
 **Use [https://127.0.0.1/](https://127.0.0.1/)** and NOT [https://localhost/](https://localhost/) because the API endpoint is served to the frontend through [https://127.0.0.1/api/](https://127.0.0.1/api/)
 
