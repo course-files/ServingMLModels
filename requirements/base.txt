@@ -3,3 +3,5 @@ Requests
 numpy
 pandas
 joblib
+scikit-learn
+mlxtend
