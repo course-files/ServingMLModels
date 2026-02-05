@@ -114,4 +114,4 @@ Refer to the files below for more details:
 
 ## Cleanup Instructions (to be done after submitting the lab)
 
-- [Cleanup Instructions ](cleanup_instructions.md)
+- [Cleanup Instructions](cleanup_instructions.md)
