@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Decision Tree Regressor</title>
+    <title>Decision Tree Regressor - Predict Percentage Profit per Unit</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; max-width: 500px; }
         input, select { width: 100%; padding: 8px; margin: 8px 0; box-sizing: border-box; }
@@ -45,8 +45,9 @@
                 ProductCategoryName: document.getElementById('ProductCategoryName').value,
                 QuantityOrdered: parseInt(document.getElementById('QuantityOrdered').value)
             };
-            fetch('http://127.0.0.1:5000/api/predict_decision_tree_regressor', {
-            // fetch('https://127.0.0.1:443/api/predict_decision_tree_regressor', {
+            
+            fetch('http://127.0.0.1:5000/api/v1/models/decision-tree-regressor/predictions', {
+            // fetch('https://127.0.0.1:443/api/v1/models/decision-tree-regressor/predictions', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)

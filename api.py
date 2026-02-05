@@ -29,12 +29,26 @@ app = Flask(__name__)
 #     allow_headers=["Content-Type"]
 # )
 
-CORS(app, supports_credentials=False,
-     origins=["https://127.0.0.1", "https://localhost",
-              "https://127.0.0.1:443", "https://localhost:443",
-              "http://127.0.0.1", "http://localhost",
-              "http://localhost:5000", "http://127.0.0.1:5000",
-              "http://localhost:5500", "http://127.0.0.1:5500"])
+CORS(
+    app, supports_credentials=False,
+    resources={r"/api/*": {
+               "origins": [
+                   "https://127.0.0.1", "https://localhost",
+                   "https://127.0.0.1:443", "https://localhost:443",
+                   "http://127.0.0.1", "http://localhost",
+                   "http://127.0.0.1:5000", "http://localhost:5000",
+                   "http://127.0.0.1:5500", "http://localhost:5500"
+                ]
+    }},
+    methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"])
+
+# CORS(app, supports_credentials=False,
+#      origins=["https://127.0.0.1", "https://localhost",
+#               "https://127.0.0.1:443", "https://localhost:443",
+#               "http://127.0.0.1", "http://localhost",
+#               "http://localhost:5000", "http://127.0.0.1:5000",
+#               "http://localhost:5500", "http://127.0.0.1:5500"])
 
 # CORS(app, supports_credentials=False,
 #      origins=["*"])
@@ -46,7 +60,7 @@ decisiontree_regressor_optimum = joblib.load('./model/decisiontree_regressor_opt
 label_encoders_1b = joblib.load('./model/label_encoders_1b.pkl')
 
 # Defines an HTTP endpoint
-@app.route('/api/predict_decision_tree_classifier', methods=['POST'])
+@app.route('/api/v1/models/decision-tree-classifier/predictions', methods=['POST'])
 def predict_decision_tree_classifier():
     # Accepts JSON data sent by a client (browser, curl, Postman, etc.)
     data = request.get_json()
@@ -73,7 +87,6 @@ def predict_decision_tree_classifier():
     # Returns the result as a JSON response:
     return jsonify({'Predicted Class = ': int(prediction)})
 
-
 # *1* Sample JSON POST values
 # {
 #     "monthly_fee": 60,
@@ -83,13 +96,13 @@ def predict_decision_tree_classifier():
 
 # *2.a.* Sample cURL POST values (without HTTPS in NGINX and Gunicorn)
 
-# curl -X POST http://127.0.0.1:5000/api/predict_decision_tree_classifier \
+# curl -X POST http://127.0.0.1:5000/api/v1/models/decision-tree-classifier/predictions \
 #   -H "Content-Type: application/json" \
 #   -d "{\"monthly_fee\": 60, \"customer_age\": 30, \"support_calls\": 1}"
 
 # *2.b.* Sample cURL POST values (with HTTPS in NGINX and Gunicorn)
 
-# curl --insecure -X POST https://127.0.0.1/api/predict_decision_tree_classifier \
+# curl --insecure -X POST https://127.0.0.1/api/v1/models/decision-tree-classifier/predictions \
 #   -H "Content-Type: application/json" \
 #   -d "{\"monthly_fee\": 60, \"customer_age\": 30, \"support_calls\": 1}"
 
@@ -101,12 +114,12 @@ def predict_decision_tree_classifier():
 #     support_calls = 1
 # } | ConvertTo-Json
 
-# Invoke-RestMethod -Uri http://127.0.0.1:5000/api/predict_decision_tree_classifier `
+# Invoke-RestMethod -Uri http://127.0.0.1:5000/api/v1/models/decision-tree-classifier/predictions `
 #     -Method POST `
 #     -Body $body `
 #     -ContentType "application/json"
 
-@app.route('/api/predict_decision_tree_regressor', methods=['POST'])
+@app.route('/api/v1/models/decision-tree-regressor/predictions', methods=['POST'])
 def predict_decision_tree_regressor():
     data = request.get_json()
     # Expected input keys:
@@ -161,40 +174,40 @@ def predict_decision_tree_regressor():
 #     "BranchSubCounty": "Kilimani",
 #     "ProductCategoryName": "Meat-Based Dishes",
 #     "QuantityOrdered": 8,
-#     "PaymentDate": "2025-11-13"
+#     "PaymentDate": "2027-11-13"
 # }
 
 # *2.a.* Sample cURL POST values
 
-# curl -X POST http://127.0.0.1:5000/api/predict_decision_tree_regressor \
+# curl -X POST http://127.0.0.1:5000/api/v1/models/decision-tree-regressor/predictions \
 #   -H "Content-Type: application/json" \
 #   -d "{\"CustomerType\": \"Business\",
 # 	\"BranchSubCounty\": \"Kilimani\",
 # 	\"ProductCategoryName\": \"Meat-Based Dishes\",
 # 	\"QuantityOrdered\": 8,
-# 	\"PaymentDate\": \"2025-11-13\"}"
+# 	\"PaymentDate\": \"2027-11-13\"}"
 
 # *2.b.* Sample cURL POST values
 
-# curl --insecure -X POST https://127.0.0.1/api/predict_decision_tree_regressor \
+# curl --insecure -X POST https://127.0.0.1/api/v1/models/decision-tree-regressor/predictions \
 #   -H "Content-Type: application/json" \
 #   -d "{\"CustomerType\": \"Business\",
 # 	\"BranchSubCounty\": \"Kilimani\",
 # 	\"ProductCategoryName\": \"Meat-Based Dishes\",
 # 	\"QuantityOrdered\": 8,
-# 	\"PaymentDate\": \"2025-11-13\"}"
+# 	\"PaymentDate\": \"2027-11-13\"}"
 
 # *3* Sample PowerShell values:
 
 # $body = @{
-#     PaymentDate         = "2025-11-13"
+#     PaymentDate         = "2027-11-13"
 #     CustomerType        = "Business"
 #     BranchSubCounty     = "Kilimani"
 #     ProductCategoryName = "Meat-Based Dishes"
 #     QuantityOrdered = 8
 # } | ConvertTo-Json
 
-# Invoke-RestMethod -Uri http://127.0.0.1:5000/api/predict_decision_tree_regressor `
+# Invoke-RestMethod -Uri http://127.0.0.1:5000/api/v1/models/decision-tree-regressor/predictions `
 #     -Method POST `
 #     -Body $body `
 #     -ContentType "application/json"
