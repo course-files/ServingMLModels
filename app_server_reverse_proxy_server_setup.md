@@ -4,7 +4,7 @@
 
 **OpenSSL is a cryptographic library that developers embed into applications to implement secure protocols**—it provides the encryption engine for HTTPS, email security, VPNs, and certificate management, **but it does not provide connectivity itself**.
 
-**OpenSSH is a complete suite of tools for secure remote access and file transfer**—it handles logins, file copying, tunneling, and port forwarding between machines, using its own independent cryptographic implementation (though it can also be configured to work with OpenSSL).
+On the other hand, **OpenSSH is a complete suite of tools for secure remote access and file transfer**—it handles logins, file copying, tunneling, and port forwarding between machines, using its own independent cryptographic implementation (though it can also be configured to work with OpenSSL).
 
 **In essence:** **OpenSSL** is the cryptographic toolkit that secures data in transit across various protocols, while **OpenSSH** is the connectivity toolset that secures remote machine access and operations—they serve different purposes, operate independently, and are not dependent on one another despite occasional integration.
 
@@ -18,13 +18,17 @@ Analogy: OpenSSL answers, "How do I encrypt this data?" while OpenSSH answers "H
 
 Create the following folders which will be mapped to the container volumes:
 
-- `container-volumes\nginx\certs`
 - `container-volumes\ubuntu\home-student`
+- `container-volumes\nginx\certs`
 
-Execute the following command in the terminal to build the Linux (Ubuntu) Server image and then use it to create the container:
+Create the `.env` file based on the example provided in [env.example](env.example).
+
+Execute the following command in the terminal to build the Linux (Ubuntu) Server image and then use the image to create the container:
 
 ```shell
-docker compose up ubuntu-server
+docker compose \
+  -f docker-compose-dev.yaml \
+  up -d ubuntu-server
 ```
 
 And then execute the following to access the bash terminal inside the container:
@@ -103,8 +107,8 @@ Run the following command in the bash terminal to generate the public certificat
 ```shell
 openssl req -x509 -nodes -days 90 \
   -newkey rsa:2048 \
-  -keyout certs/selfsigned.key \
-  -out certs/selfsigned.crt \
+  -keyout /home/student/certs/selfsigned.key \
+  -out /home/student/certs/selfsigned.crt \
   -config /home/student/openssl.cnf
 ```
 
@@ -116,11 +120,11 @@ ls -al /home/student/certs/
 
 The command does the following 2 tasks:
 
-1. Creates a new private key → **certs/selfsigned.key**
+1. Creates a new private key → **/home/student/certs/selfsigned.key**
 This is secret. **YOU SHOULD NOT SHARE IT PUBLICLY.**
 Nginx uses it to prove that it is the server.
 
-2. Creates a new public certificate → **certs/selfsigned.crt**
+2. Creates a new public certificate → **/home/student/certs/selfsigned.crt**
 This is the self-signed certificate.
 It contains the “public half” of your identity.
 Browsers use it to set up encrypted communication.
@@ -155,19 +159,22 @@ You can then deploy the certificate + private key in Nginx.
 
 This means, copy the following created files:
 
-- `container-volumes\ubuntu\home-student\certs\selfsigned.crt` and 
+- `container-volumes\ubuntu\home-student\certs\selfsigned.crt` and
 - `container-volumes\ubuntu\home-student\certs\selfsigned.key`
 
-to `container-volumes\nginx\certs`.
+to the mapped container volume `container-volumes\nginx\certs`.
 
-Example in nginx.conf:
+[container-volumes/nginx/nginx.conf](container-volumes/nginx/nginx.conf) will then use the certificate + private key based on its configuration:
 
 ```config
-ssl_certificate     /etc/nginx/certs/yourdomain.crt;
-ssl_certificate_key /etc/nginx/certs/yourdomain.key;
+listen 443 ssl;
+server_name localhost;
+
+ssl_certificate     /etc/nginx/certs/selfsigned.crt;
+ssl_certificate_key /etc/nginx/certs/selfsigned.key;
 ```
 
-In this lab, the deployment is done when the Nginx image is built and the updated configuration ([container-volumes/nginx/nginx.conf](container-volumes/nginx/nginx.conf)) file is uploaded to the running Nginx container.
+The deployment is completed when the Nginx image is built and the updated configuration ([container-volumes/nginx/nginx.conf](container-volumes/nginx/nginx.conf)) file is uploaded to the running Nginx container.
 
 ## Step 2: Use Docker Compose
 
@@ -178,6 +185,7 @@ docker compose \
   -f docker-compose.yaml \
   -f docker-compose-dev.yaml \
   up -d \
+  --scale nginx=1 \
   --scale flask-gunicorn-app=2
 ```
 
@@ -209,10 +217,4 @@ The Docker Compose command in **Step 2** builds the following Dockerfile to crea
 
 ## Step 5: Confirm your Setup
 
-You should now be able to access the Nginx reverse proxy which is your web server, using HTTPS via [https://127.0.0.1/](https://127.0.0.1/)
-
-**Use [https://127.0.0.1/](https://127.0.0.1/)** and NOT [https://localhost/](https://localhost/) because the API endpoint is served to the frontend through [https://127.0.0.1/api/](https://127.0.0.1/api/)
-
-The following warning is expected in our development environment used for learning, as explained in Step 2 above (using self-signed certificates), therefore, click "Proceed to localhost (unsafe)".
-
-![https_localhost](assets/images/https_localhost.png)
+You should now be able to access the Nginx reverse proxy which is your web server, **using HTTPS** via [https://127.0.0.1/](https://127.0.0.1/) or [https://localhost/](https://localhost/).
