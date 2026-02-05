@@ -13,12 +13,10 @@
 
 <p align="left">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width="40"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original-wordmark.svg" width="40"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" width="40"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" width="40"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg" width="40"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg" width="40"/>
-
 </p>
 
 ## Repository Structure
@@ -34,15 +32,15 @@
 ├── app_server_reverse_proxy_server_setup.md
 ├── assets
 │   └── images
-│       └── https_localhost.png
+├── cleanup_instructions.md
 ├── container-volumes
-│   └── nginx
-│       ├── certs
-│       │   ├── selfsigned.crt
-│       │   └── selfsigned.key
-│       └── nginx.conf
+│   ├── gunicorn
+│   ├── nginx
+│   │   └── nginx.conf
+│   └── ubuntu
 ├── docker-compose-dev.yaml
 ├── docker-compose-prod.yaml
+├── env.example
 ├── frontend
 │   ├── Proxies.png
 │   ├── RequestFlow.jpg
@@ -56,7 +54,11 @@
 │   └── requirements.txt
 ├── images
 │   ├── Dockerfile.flask-gunicorn-app
-│   └── Dockerfile.nginx
+│   ├── Dockerfile.nginx
+│   ├── OLD_Dockerfile.flask-gunicorn-app
+│   └── ubuntu
+│       ├── Dockerfile.ubuntu
+│       └── entrypoint.sh
 ├── lab_submission_instructions.md
 ├── model
 │   ├── decisiontree_classifier_baseline.pkl
@@ -73,7 +75,14 @@
 │   ├── scaler_5.pkl
 │   └── support_vector_classifier_optimum.pkl
 ├── publicly_serving_the_model_for_validation_by_domain_experts.md
-├── requirements.txt
+├── requirements
+│   ├── base.txt
+│   ├── colab.txt
+│   ├── constraints.txt
+│   ├── dev.inferred.txt
+│   ├── dev.lock.txt
+│   ├── dev.txt
+│   └── prod.txt
 ├── rules
 ├── runtime.txt
 ├── setup_instructions.md
@@ -81,7 +90,7 @@
     ├── app.py
     └── requirements.txt
 
-12 directories, 44 files
+15 directories, 52 files
 ```
 
 ## Setup Instructions
@@ -102,3 +111,7 @@ Refer to the files below for more details:
 ## Lab Submission Instructions
 
 - [Lab Submission Instructions](lab_submission_instructions.md)
+
+## Cleanup Instructions (to be done after submitting the lab)
+
+- [Cleanup Instructions ](cleanup_instructions.md)

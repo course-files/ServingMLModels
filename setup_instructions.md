@@ -195,7 +195,7 @@ dependencies isolated from the system Python packages.
 3. Navigate to the project's root folder using the MSYS2 terminal.
 
 ```shell
-tree -I ".venv|__pycache__|roughwork|lab_submission_ANSWERS"
+tree -I ".venv|__pycache__|roughwork|lab_submission_ANSWERS|certs|home-student|opt-app-smm|roughwork"
 ```
 
 ## Creating a `requirements.txt` File
