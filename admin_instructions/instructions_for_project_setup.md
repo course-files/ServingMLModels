@@ -16,9 +16,14 @@
     python3 --version
     ```
 
-    - If Python is not installed (i.e., you do not see any version number), 
-   then download and install it from the official website:
-   <https://www.python.org/downloads/>
+    or (for Windows - Replace **Python312** (Python version 3.12) with the Python version you want to use)
+
+    ```shell
+    '/C/Python312/python.exe' --version
+    ```
+
+    - If Python is not installed (i.e., you do not see any version number),
+   then refer to [instructions_for_python_installation.md](instructions_for_python_installation.md) for a guide on installing multiple python versions for the labs.
 
 2. Create and activate a **virtual environment** to keep your project
 dependencies isolated from the system Python packages.
@@ -55,11 +60,45 @@ dependencies isolated from the system Python packages.
      site-packages.
 
    - In the root of your project folder, run the following command to create
-   the virtual environment:
+   the virtual environment. This will use the global python version.
 
     ```shell
     python -m venv .venv
     ```
+
+   - If you want to use a specific python version to create your virtual environment, then use the python interpreter located in the correct path.
+
+     - Example to create a virtual environment that will use Python Version 3.12 in Windows:
+
+      ```shell
+      /C/Python312/python.exe -m venv .venv
+      ```
+
+     - Example to create a virtual environment that will use Python Version 3.14 in Windows:
+
+      ```shell
+      /C/Python314/python.exe -m venv .venv
+      ```
+
+     - Example to create a virtual environment that will use Python Version 3.12.10 in Linux:
+
+      ```shell
+      mkdir ~/Documents/project_folder
+      cd ~/Documents/project_folder
+      pyenv local 3.12.10
+      python --version
+      python -m venv .venv
+      ```
+
+     - Example to create a virtual environment that will use Python Version 3.14.3 in Linux:
+
+      ```shell
+      mkdir ~/Documents/project_folder
+      cd ~/Documents/project_folder
+      pyenv local 3.14.3
+      python --version
+      python -m venv .venv
+      ```
 
    **Part B**
 
@@ -191,11 +230,11 @@ dependencies isolated from the system Python packages.
 ### Creating a Project Structure using `tree`
 
 1. Install MSYS2 (for Windows) if not already installed.
-2. Download link: <https://www.msys2.org/docs/installer/>
+2. Download link: [https://github.com/msys2/msys2-installer/releases](https://github.com/msys2/msys2-installer/releases)
 3. Navigate to the project's root folder using the MSYS2 terminal.
 
 ```shell
-tree -I ".venv|__pycache__|roughwork|lab_submission_ANSWERS|certs|home-student|opt-app-smm|roughwork"
+tree -I ".venv|__pycache__|roughwork|lab_submission_ANSWERS"
 ```
 
 ## Creating a `requirements.txt` File

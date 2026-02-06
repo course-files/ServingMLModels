@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 
-ENV ENV=DEV
+ENV ENVIRONMENT=DEV
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install minimal useful tools

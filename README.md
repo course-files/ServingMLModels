@@ -29,16 +29,16 @@
 ├── Procfile
 ├── README.md
 ├── RecommendedCitation.bib
+├── admin_instructions
+│   ├── instructions_for_postlab_cleanup.md
+│   ├── instructions_for_project_setup.md
+│   └── instructions_for_python_installation.md
 ├── api.py
 ├── app_server_reverse_proxy_server_setup.md
-├── assets
-│   └── images
 ├── cleanup_instructions.md
 ├── container-volumes
-│   ├── gunicorn
-│   ├── nginx
-│   │   └── nginx.conf
-│   └── ubuntu
+│   └── nginx
+│       └── nginx.conf
 ├── docker-compose-dev.yaml
 ├── docker-compose-prod.yaml
 ├── env.example
@@ -56,7 +56,6 @@
 ├── images
 │   ├── Dockerfile.flask-gunicorn-app
 │   ├── Dockerfile.nginx
-│   ├── OLD_Dockerfile.flask-gunicorn-app
 │   └── ubuntu
 │       ├── Dockerfile.ubuntu
 │       └── entrypoint.sh
@@ -86,17 +85,16 @@
 │   └── prod.txt
 ├── rules
 ├── runtime.txt
-├── setup_instructions.md
 └── streamlit-sharing-using-streamlit
     ├── app.py
     └── requirements.txt
 
-15 directories, 52 files
+12 directories, 53 files
 ```
 
 ## Setup Instructions
 
-- [Setup Instructions](setup_instructions.md)
+- [Setup Instructions](./admin_instructions/instructions_for_project_setup.md)
 
 ## Lab Manual
 
@@ -115,4 +113,4 @@ Refer to the files below for more details:
 
 ## Cleanup Instructions (to be done after submitting the lab)
 
-- [Cleanup Instructions](cleanup_instructions.md)
+- [Cleanup Instructions](/admin_instructions/instructions_for_postlab_cleanup.md)
