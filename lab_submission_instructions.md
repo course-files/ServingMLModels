@@ -50,17 +50,17 @@
 
 **Specify the chosen level of difficulty** (baseline, intermediate, or advanced):
 
-## Public URL
-
-**Specify the public URL to the Gradio/Streamlit App**:
-
 ## Video Demonstration
 
-Submit the link to a short video (not more than 5 minutes) demonstrating the use of the API. Please ensure that the lecturer has rights to view the video.
+Submit the link to a short video (not more than 5 minutes) demonstrating your solution. Please ensure that the lecturer has rights to view the video.
 
 Note that you are required to submit the link to the video and NOT the video itself. The video should NOT be uploaded to your repository—that would be a misuse of GitHub.
 
 **Link to the video:**
+
+## Public URL
+
+**Specify the public URL to the Gradio/Streamlit App**:
 
 ---
 
