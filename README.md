@@ -2,8 +2,8 @@
 
 | Key              | Value                                                                                                                                                                                                                                                                                     |
 |:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Course Codes** | BBT 4206                                                                                                                                                                                                                                                                                  |
-| **Course Names** | BBT 4206: Business Intelligence II (Week 4-6 of 13)                                                                                                                                                                                                                                       |
+| **Course Code** | BBT 4206                                                                                                                                                                                                                                                                                  |
+| **Course Name** | BBT 4206: Business Intelligence II (Week 4-6 of 13)                                                                                                                                                                                                                                       |
 | **Semester**     | January to April 2026                                                                                                                                                                                                                                                                   |
 | **Lecturer**     | Allan Omondi                                                                                                                                                                                                                                                                              |
 | **Contact**      | aomondi@strathmore.edu                                                                                                                                                                                                                                                                    |
@@ -14,17 +14,20 @@
 <p align="left">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width="40"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" width="40"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" width="40"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" width="40" />
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg" width="40"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg" width="40"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" width="40"/>
+<img src="assets/images/gunicorn-logo-png-transparent.png" width="60"/>
+<img src="assets/images/Hf-logo-with-title.svg" width="120"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/streamlit/streamlit-original.svg" width="40" />
+<img src="assets/images/Render-logo-Black.png" width="100"/>
 </p>
 
 ## Repository Structure
 
 ```text
 .
-├── Docker-Compose.yaml
 ├── LICENSE
 ├── Procfile
 ├── README.md
@@ -35,30 +38,39 @@
 │   └── instructions_for_python_installation.md
 ├── api.py
 ├── app_server_reverse_proxy_server_setup.md
+├── assets
+│   └── images
+│       ├── Hf-logo-with-title.svg
+│       ├── Render-logo-Black.png
+│       ├── Streamlit-logo-primary-colormark-darktext.png
+│       └── ssh_student_at_localhost_p_2222.jpeg
 ├── cleanup_instructions.md
 ├── container-volumes
-│   └── nginx
-│       └── nginx.conf
+│   ├── nginx
+│   │   └── nginx.conf
+│   └── ubuntu
 ├── docker-compose-dev.yaml
 ├── docker-compose-prod.yaml
+├── docker-compose.yaml
+├── dockerfiles
+│   ├── Dockerfile.flask-gunicorn-app
+│   ├── Dockerfile.nginx
+│   └── ubuntu
+│       ├── Dockerfile.ubuntu
+│       └── entrypoint.sh
 ├── env.example
 ├── frontend
 │   ├── Proxies.png
 │   ├── RequestFlow.jpg
 │   ├── RequestFlow.png
 │   ├── api_consumer.py
+│   ├── api_consumer_from_dev_flask.py
 │   ├── api_test_DT_classifier.html
 │   ├── api_test_DT_regressor.html
 │   └── index.html
 ├── huggingface-spaces-using-gradio
 │   ├── app.py
 │   └── requirements.txt
-├── images
-│   ├── Dockerfile.flask-gunicorn-app
-│   ├── Dockerfile.nginx
-│   └── ubuntu
-│       ├── Dockerfile.ubuntu
-│       └── entrypoint.sh
 ├── lab_submission_instructions.md
 ├── model
 │   ├── decisiontree_classifier_baseline.pkl
@@ -89,7 +101,7 @@
     ├── app.py
     └── requirements.txt
 
-12 directories, 53 files
+15 directories, 58 files
 ```
 
 ## Setup Instructions
@@ -98,14 +110,15 @@
 
 ## Lab Manual
 
-Refer to the files below for more details:
+Refer to the files below, in the order specified, for more details:
 
 1. [api_consumer.py](frontend/api_consumer.py)
 2. [api.py](api.py)
-3. [api_test_DT_classifier.html](frontend/api_test_DT_classifier.html)
-4. [api_test_DT_regressor.html](frontend/api_test_DT_regressor.html)
-5. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md)
-6. [Publicly Serving the Model for Validation by Domain Experts](publicly_serving_the_model_for_validation_by_domain_experts.md)
+3. [api_consumer_from_dev_flask.py](frontend/api_consumer_from_dev_flask.py)
+4. [api_test_DT_classifier.html](frontend/api_test_DT_classifier.html)
+5. [api_test_DT_regressor.html](frontend/api_test_DT_regressor.html)
+6. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md)
+7. [Publicly Serving the Model for Validation by Domain Experts](publicly_serving_the_model_for_validation_by_domain_experts.md)
 
 ## Lab Submission Instructions
 

@@ -1,6 +1,6 @@
 # Setting up a Production-Ready API
 
-## Step 1: Create a Self-Signed Private Key and Public Certificate for HTTPS
+## Step 1.1: Create a Self-Signed Private Key and Public Certificate for HTTPS
 
 **OpenSSL is a cryptographic library that developers embed into applications to implement secure protocols**—it provides the encryption engine for HTTPS, email security, VPNs, and certificate management, **but it does not provide connectivity itself**.
 
@@ -132,7 +132,7 @@ Browsers use it to set up encrypted communication.
 Key Points to Note:
 
 1. With a Self-Signed Certificate (our current setup for educational purposes):
-We generate **both the private key (.key) and the certificate (.crt)** ourselves.
+We generate and issue **both the private key (.key) and the certificate (.crt)** ourselves.
 The browser says: “I do not know this Certificate Authority that issued this
 certificate (you issued the certificate yourself), so I cannot trust this identity.”
 Encryption works (data is scrambled), but identity is not trusted.
@@ -144,7 +144,7 @@ This file contains your domain name (e.g., `yourdomain.co.ke`) and your public k
 You generate the public key from your private key.
 You then send the CSR to a Certificate Authority (CA)
 
-Examples of CAs: Let’s Encrypt (free), DigiCert, GlobalSign, etc.
+Examples of CAs: [Let’s Encrypt (free)](https://letsencrypt.org/), [DigiCert](https://www.digicert.com/), [GlobalSign](https://www.globalsign.com/en), etc.
 
 The CA confirms that you actually own `yourdomain.co.ke`.
 
@@ -176,6 +176,37 @@ ssl_certificate_key /etc/nginx/certs/selfsigned.key;
 
 The deployment is completed when the Nginx image is built and the updated configuration ([container-volumes/nginx/nginx.conf](container-volumes/nginx/nginx.conf)) file is uploaded to the running Nginx container.
 
+## Step 1.2: [EXTRA] Install and Use SSH
+
+Install and use SSH to understand the different use cases of SSL and SSH.
+
+Execute the following in the Linux (Ubuntu) server container:
+
+```shell
+sudo apt update
+sudo apt install -y openssh-server
+```
+
+Verify installation:
+
+```shell
+ssh -V
+
+# Commented out because Docker containers do not contain a full Linux OS that has the standard `systemctl` installed
+# systemctl status ssh
+
+# Instead of `systemctl`, we use the following in a container:
+sudo service ssh start
+```
+
+You can now use SSH (not SSL) to access the container running Linux. Execute the following in another terminal:
+
+```shell
+ssh student@localhost -p 2222
+```
+
+![ssh_student_at_localhost_p_2222](assets/images/ssh_student_at_localhost_p_2222.jpeg)
+
 ## Step 2: Use Docker Compose
 
 The building of the images in the subsequent steps is done using the following Docker Compose files: [docker-compose.yaml](docker-compose.yaml) followed by [docker-compose-dev.yaml](docker-compose-dev.yaml). Execute the following to build the images and run the Docker containers (this enables you to perform Step 3 and Step 4):
@@ -191,13 +222,13 @@ docker compose \
 
 Docker Compose in turn accesses the following two Dockerfiles to build the required images:
 
-1. [Dockerfile.flask-gunicorn-app](images/Dockerfile.flask-gunicorn-app)
-2. [Dockerfile.nginx](images/Dockerfile.nginx)
+1. [Dockerfile.flask-gunicorn-app](dockerfiles/Dockerfile.flask-gunicorn-app)
+2. [Dockerfile.nginx](dockerfiles/Dockerfile.nginx)
 
 ## Step 3: Create the Application Server
 
-The application server is made up of **Gunicorn**, a Web-Server Gateway Interface (WSGI) application server.
-**Gunicorn** runs in a **Python** environment to access **Flask**. Flask serves the model trained using Python through an API.
+The application server is made up of **Gunicorn**, a Web-Server Gateway Interface (WSGI) application server →
+**Gunicorn** runs in a **Python** environment to access **Flask** → Flask serves the model trained using Python through an API.
 ![Request Flow](frontend/RequestFlow.jpg)
 
 ## Step 4: Create the Reverse Proxy
@@ -213,7 +244,7 @@ A reverse proxy:
 - Caches responses (e.g., static images, JSON).
 - Shields backend servers from direct exposure to the internet (security).
 
-The Docker Compose command in **Step 2** builds the following Dockerfile to create the NGINX web server that will be assigned the role of a **reverse proxy**: [Dockerfile.nginx](Dockerfile.nginx)
+The Docker Compose command in **Step 2** builds an NGINX image using the following Dockerfile. The image is then used to create the NGINX web server container that will be assigned the role of a **reverse proxy**: [Dockerfile.nginx](Dockerfile.nginx)
 
 ## Step 5: Confirm your Setup
 

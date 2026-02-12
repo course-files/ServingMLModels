@@ -68,19 +68,19 @@ dependencies isolated from the system Python packages.
 
    - If you want to use a specific python version to create your virtual environment, then use the python interpreter located in the correct path.
 
-     - Example to create a virtual environment that will use Python Version 3.12 in Windows:
+     - Example of creating a virtual environment that will use Python Version 3.12 in Windows:
 
       ```shell
       /C/Python312/python.exe -m venv .venv
       ```
 
-     - Example to create a virtual environment that will use Python Version 3.14 in Windows:
+     - Example of creating a virtual environment that will use Python Version 3.14 in Windows:
 
       ```shell
       /C/Python314/python.exe -m venv .venv
       ```
 
-     - Example to create a virtual environment that will use Python Version 3.12.10 in Linux:
+     - Example of creating a virtual environment that will use Python Version 3.12.10 in Linux:
 
       ```shell
       mkdir ~/Documents/project_folder
@@ -90,7 +90,7 @@ dependencies isolated from the system Python packages.
       python -m venv .venv
       ```
 
-     - Example to create a virtual environment that will use Python Version 3.14.3 in Linux:
+     - Example of creating a virtual environment that will use Python Version 3.14.3 in Linux:
 
       ```shell
       mkdir ~/Documents/project_folder
@@ -227,31 +227,20 @@ dependencies isolated from the system Python packages.
 
 ## Project Creation Instructions
 
-### Creating a Project Structure using `tree`
+## Creating/Updating a `requirements.txt` File
 
-1. Install MSYS2 (for Windows) if not already installed.
-2. Download link: [https://github.com/msys2/msys2-installer/releases](https://github.com/msys2/msys2-installer/releases)
-3. Navigate to the project's root folder using the MSYS2 terminal.
-
-```shell
-tree -I ".venv|__pycache__|roughwork|lab_submission_ANSWERS"
-```
-
-## Creating a `requirements.txt` File
-
-- The `requirements.txt` file is used for listing packages
-(installable units via `pip`). Those packages usually contain the libraries you actually import and use.
+- The `requirements.txt` file is used for listing dependencies (packages and the libraries they contain) required to run the lab or application.
 
 **Analogy:**
 
-- Packages → like the grocery bags you bring home from the store.
+- 📦 Packages → like the grocery bags you bring home from the store.
   - Example: You pip install `numpy` → you just bought a bag labeled **NumPy**.
 
-- Libraries → like the ingredients inside those bags.
-  - Example: Inside the NumPy package, you find all the mathematical functions (arrays, linear algebra, random number generators).
+- 📚Libraries → like the ingredients inside those bags.
+  - Example: Inside the NumPy package, you will find various mathematical tools (arrays, linear algebra functions, random number generators, etc.).
 
 - When you create a `requirements.txt` file, you are making a "shopping list" of packages — the bags you must bring from the store.
-- And when you write Python code, you are actually cooking with the ingredients (libraries) inside those packages.
+- And when you write Python code, you are "cooking using the ingredients (libraries) inside the shopping bags (packages)".
 
 **Option 1: Using `pipreqs`**
 
@@ -283,4 +272,14 @@ pipreqs . --savepath ./requirements/dev.inferred.txt --encoding=utf8 --force --i
 
 ```shell
 pip freeze > ./requirements/dev.lock.txt
+```
+
+### [Optional] Creating a Project Structure using `tree` in Windows
+
+1. Install MSYS2 (for Windows) if not already installed.
+2. Download link: [https://github.com/msys2/msys2-installer/releases](https://github.com/msys2/msys2-installer/releases)
+3. Navigate to the project's root folder using the MSYS2 terminal.
+
+```shell
+tree -I ".venv|.idea|__pycache__|roughwork|lab_submission_ANSWERS"
 ```

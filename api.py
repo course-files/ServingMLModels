@@ -31,7 +31,7 @@ app = Flask(__name__)
 
 CORS(
     app, supports_credentials=False,
-    resources={r"/api/*": {
+    resources={r"/api/*": { # This means CORS will only apply to routes that start with /api/
                "origins": [
                    "https://127.0.0.1", "https://localhost",
                    "https://127.0.0.1:443", "https://localhost:443",
@@ -42,13 +42,6 @@ CORS(
     }},
     methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type"])
-
-# CORS(app, supports_credentials=False,
-#      origins=["https://127.0.0.1", "https://localhost",
-#               "https://127.0.0.1:443", "https://localhost:443",
-#               "http://127.0.0.1", "http://localhost",
-#               "http://localhost:5000", "http://127.0.0.1:5000",
-#               "http://localhost:5500", "http://127.0.0.1:5500"])
 
 # CORS(app, supports_credentials=False,
 #      origins=["*"])

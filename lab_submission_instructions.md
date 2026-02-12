@@ -155,7 +155,7 @@ The lab will be marked out of 10 marks.
 - Approaching Expectations: 3–5 marks
 - Below Expectations: 0–2 marks
 
-The marks depend on the chosen level of difficulty such that:
+The marks also depend on the chosen level of difficulty such that:
 
 - Advanced (Distinction) >= 8.6 marks
 - Intermediate (Merit) 7.5–8.5 marks

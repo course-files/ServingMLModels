@@ -15,8 +15,15 @@ The cleanup involves deleting the following from you development machine to save
 
 ## Container Volumes to Delete
 
-- `container-volumes\nginx\certs`
-- `container-volumes\ubuntu\home-student`
+- From the Project Repository: `container-volumes\nginx\certs`
+- From the Project Repository: `container-volumes\ubuntu\home-student`
+- From Docker Volumes: `servingmlmodels_home-student`
+- From Docker Volumes: `nginx-certs`
+- From Docker Volumes: `nginx-frontend`
+
+## Environment Variables in the `.env` file
+
+- `.env`
 
 ## Python Virtual Environment
 

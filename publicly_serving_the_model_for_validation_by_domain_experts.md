@@ -6,17 +6,31 @@ Domain experts can then use these platforms to validate the model and provide th
 
 Examples:
 
+<p align="left">
+<img src="assets/images/Hf-logo-with-title.svg" width="120"/>
+</p>
+
 1. **Hugging Face Spaces – [https://huggingface.co/spaces](https://huggingface.co/spaces)**
 
     Hugging Face offers a collaborative platform for hosting and sharing machine learning demos. Developers can deploy models easily using Gradio or Streamlit as frontends, with Hugging Face handling the hosting. It is particularly popular in the research and NLP communities because of its integration with the Hugging Face model hub. Domain experts can interact with the model through a simple web UI, making it ideal for quick prototyping and validation.
+
+<p align="left">
+<img src="assets/images/Streamlit-logo-primary-colormark-darktext.png" width="120"/>
+</p>
 
 2. **Streamlit Community Cloud (formerly Streamlit Sharing) – [https://share.streamlit.io](https://share.streamlit.io)**
 
     Streamlit’s official hosting platform allows developers to deploy Python applications directly from a GitHub repository. It is designed to be simple and developer-friendly, with automatic updates whenever the repository changes. Streamlit Sharing is well-suited for lightweight data apps, dashboards, and interactive ML demos. Domain experts can test models via a familiar, user-friendly Streamlit interface.
 
+<p align="left">
+<img src="assets/images/Render-logo-Black.png" width="120"/>
+</p>
+
 3. **Render – [https://dashboard.render.com/](https://dashboard.render.com/)**
 
     Render is a general-purpose cloud platform for deploying web applications and APIs. Unlike Hugging Face Spaces and Streamlit Sharing, which focus on demos, Render is closer to production-grade deployment. It supports Flask, FastAPI, and Django apps, making it **ideal for exposing a trained model as an API endpoint** (for Postman or integration with other systems). Render offers a free tier (with card verification), enabling developers to test ML APIs before moving to production.
+
+Amongst many other alternative services for hosting your model
 
 ## Hugging Face Spaces using a Gradio App
 
@@ -24,14 +38,14 @@ Overall workflow:
 
 1. Create a Gradio app
 2. Deploy the Gradio app to Hugging Face Spaces
-3. Domain experts can access the Gradio app via a web interface to test and validate the model's performance
+3. Deploy the model(s) and encoder(s) to Hugging Face Spaces
+4. Deploy the `requirements.txt` to Hugging Face Spaces
+5. Run the Gradio app
+6. Domain experts then access the Gradio app via a web interface to test and validate the model's performance
 
 ### Step 1: Create a Gradio App (`app.py`)
 
-- Load your model and define a prediction function.
-- Build a Gradio interface.
-
-Sample:
+Sample Gradio app:
 
 ```python
 import gradio as gr
@@ -58,9 +72,6 @@ if __name__ == "__main__":
     iface.launch()
 ```
 
-- Prepare the `requirements.txt` file
-- This would then be supported by a scaled down version of the libraries in a `requirements.txt` file.
-
 Sample `requirements.txt` content:
 
 ```text
@@ -71,7 +82,7 @@ flask
 joblib
 ```
 
-### Step 2: Deploy the Gradio app to Hugging Face Spaces
+### Step 2: Deploy the Gradio app, models, and encoders to Hugging Face Spaces
 
 - Create a Hugging Face account if you do not have one - [https://huggingface.co/](https://huggingface.co/)
 - Create a new Space (right-click on the "Spaces" tab and select "New Space")
@@ -81,17 +92,15 @@ joblib
 
 This will create a new repository in your Hugging Face account.
 
-- Upload the `app.py` file in the repository
+- Upload the `app.py` file (**the Gradio app named `app.py`, NOT the Flask app we named `api.py`**) in the repository. Location of the Gradio app in this repository: [huggingface-spaces-using-gradio/app.py](huggingface-spaces-using-gradio/app.py)
 - Upload the `requirements.txt` file in the repository
-- Upload the `.pkl` model and other files as needed to make a prediction
+- Upload the `.pkl` model and other files as needed (e.g., encoders and association rules) to make a prediction
 
 ### Step 3: Access the Gradio app via a Web Interface
 
 - Go to the Space URL. This will be in the form of `https://huggingface.co/spaces/<username>/<space_name>`
 - The Gradio app will be launched in the browser tab once it automatically builds the Gradio app.
-- Enter the input features
-- Click the "Submit" button
-- View the prediction result
+- Confirm that the app is working.
 - Share the Space URL with domain experts for validation and feedback. Example: [https://huggingface.co/spaces/course-files/customer-churn-demo](https://huggingface.co/spaces/course-files/customer-churn-demo)
 
 ## Streamlit Community Cloud (Streamlit Sharing) using a Streamlit App
@@ -99,15 +108,12 @@ This will create a new repository in your Hugging Face account.
 Overall workflow:
 
 1. Create a Streamlit app
-2. Deploy the Streamlit app to Streamlit Sharing
+2. Deploy the Streamlit app + model + encoders to Streamlit Sharing
 3. Domain experts can access the Streamlit app via a web interface to test and validate the model's performance
 
 ### Step 1: Create a Streamlit App (`app.py`)
 
-- Load your model and define how a prediction will be made.
-- Build a Streamlit interface.
-
-Sample:
+Sample Streamlit app:
 
 ```python
 import streamlit as st
@@ -148,7 +154,7 @@ if submitted:
 - Create a new app (Click on the "Create App" link at the top right corner)
 - Select the "Deploy a public app from GitHub". This assumes that you have a GitHub repository with the Streamlit app.
 - Name the app
-- Specify the location of the `app.py` file in the GitHub repository
+- Specify the location of the `app.py` file in the GitHub repository. **Note:** is the Streamlit app, NOT the Gradio app, and NOT the Flask app. Location of the Streamlit app in this repository: [streamlit-sharing-using-streamlit/app.py](streamlit-sharing-using-streamlit/app.py)
 - Specify a custom URL for the app
 - Click "Deploy"
 
@@ -156,9 +162,7 @@ if submitted:
 
 - Go to the Steamlit Share URL. This will be in the form of `https://<app_name>.streamlit.app/`
 - The Streamlit app will be launched in the browser tab once it automatically builds the Streamlit app.
-- Enter the input features
-- Click the "Predict" button
-- View the prediction result
+- Confirm that the app is working.
 - Share the Streamlit app URL with domain experts for validation and feedback. Example: [https://customer-churn-demo.streamlit.app/](https://customer-churn-demo.streamlit.app/)
 
 ## Public API Access via Render
@@ -172,7 +176,7 @@ Steps:
 5. Go to [https://dashboard.render.com](https://dashboard.render.com)
 6. Click + New → Web Service
 7. Connect your GitHub repository that has the code
-8. Select the branch (main). Render should auto-detect that you are using Python and Flask.
+8. Select the branch (main). Render should auto-detect that you are using Python and Flask. We do not need to create a "**Render app**".
 9. Specify the name of your service
 10. Specify the start command as `gunicorn -w 4 -b 0.0.0.0:$PORT api:app` (assuming the Flask app is named `app` and is defined in `api.py`)
 11. Select the "Free" plan "For hobby projects"
