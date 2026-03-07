@@ -46,6 +46,16 @@ CORS(
 # CORS(app, supports_credentials=False,
 #      origins=["*"])
 
+# Explanation of CORS methods:
+# GET → "Give me this data."
+# POST → "Store this data."
+# OPTIONS → "Am I allowed to do this first?"
+
+# allow_headers=["Content-Type"] tells the browser:
+# “When you send a cross-origin request to this API,
+# you are allowed to include the 'Content-Type' header.”
+# E.g., 'Content-Type: application/json'
+
 # Load different models
 # joblib is used to load a trained model so that the API can serve ML predictions
 decisiontree_classifier_baseline = joblib.load('./model/decisiontree_classifier_baseline.pkl')

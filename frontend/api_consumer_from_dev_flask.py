@@ -11,7 +11,7 @@ payload = {
 headers = {
     'Content-Type': 'application/json', # This header tells the server that the payload is in JSON format
     'Accept': 'application/json',       # This header tells the server that the client expects a JSON response
-    'User-Agent': 'ServingMLModels-Client/1.0', # This header identifies the client application making the request (optional but can be useful for logging and debugging in the backend)
+    'User-Agent': 'ServingMLModels-Client/1.0', # This header identifies the client application making the request (optional, but can be useful for logging and debugging in the backend)
     # 'Authorization': 'Bearer <token>',  # This header is used for token-based authentication if the API requires it
 }
 
