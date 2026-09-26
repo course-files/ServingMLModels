@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mall Customer Segmenter</title>
+<style>
+  :root {
+    --accent: #7c3aed;
+    --accent-dark: #6d28d9;
+    --bg: #f3f4f6;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --ok-bg: #f5f3ff;
+    --err-bg: #fef2f2;
+    --err-text: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px 64px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
+    max-width: 480px;
+    width: 100%;
+    padding: 32px 32px 28px;
+  }
+  .back-link { display: inline-block; margin-bottom: 16px; color: var(--muted); text-decoration: none; font-size: 14px; }
+  .back-link:hover { color: var(--accent); }
+  .badge {
+    display: inline-block; background: var(--ok-bg); color: var(--accent-dark);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
+  }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p.lead { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+  label { display: block; font-size: 13px; font-weight: 600; margin: 16px 0 6px; }
+  input {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+    border-radius: 10px; font-size: 14px; background: #fff; color: var(--text);
+  }
+  input:focus {
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+  }
+  button {
+    width: 100%; margin-top: 24px; padding: 12px 16px; background: var(--accent);
+    color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s ease;
+  }
+  button:hover { background: var(--accent-dark); }
+  button:disabled { background: #c4b5fd; cursor: default; }
+  #result { margin-top: 20px; padding: 16px; border-radius: 10px; font-size: 14px; display: none; }
+  #result.show { display: block; }
+  #result.ok { background: var(--ok-bg); color: var(--accent-dark); }
+  #result.err { background: var(--err-bg); color: var(--err-text); }
+  #result .figure { font-size: 22px; font-weight: 700; margin-top: 4px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <a class="back-link" href="index.html">&larr; All endpoints</a>
+    <span class="badge">Clustering</span>
+    <h1>Mall Customer Segment Assignment</h1>
+    <p class="lead">Calls <code>POST /api/v1/models/mall-customer-segmenter/predictions</code></p>
+
+    <form id="predictForm">
+      <label for="age">Age</label>
+      <input type="number" id="age" value="27" required>
+
+      <label for="income">Annual Income (k$)</label>
+      <input type="number" id="income" value="45" required>
+
+      <label for="spending">Spending Score (1-100)</label>
+      <input type="number" id="spending" min="1" max="100" value="72" required>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Cluster</th>
+            <th>Age</th>
+            <th>Income</th>
+            <th>Spending</th>
+            <th>Segment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>Young (~33)</td>
+            <td>High</td>
+            <td>High</td>
+            <td><strong>Premium targets</strong> — young, affluent, high spenders</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Older (~56)</td>
+            <td>Mid</td>
+            <td>Mid</td>
+            <td><strong>Average, mature customers</strong></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Middle-aged (~40)</td>
+            <td>High</td>
+            <td>Low</td>
+            <td><strong>High income, low engagement</strong> — affluent but untapped</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Older (~46)</td>
+            <td>Low</td>
+            <td>Low</td>
+            <td><strong>Frugal / budget-conscious</strong></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Young (~25)</td>
+            <td>Low-mid</td>
+            <td>High</td>
+            <td><strong>Young enthusiastic spenders</strong> — high spending relative to income</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="submit" id="submitBtn">Assign Segment</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+<script>
+  const API_URL = "http://127.0.0.1:5000/api/v1/models/mall-customer-segmenter/predictions";
+
+  document.getElementById("predictForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const submitBtn = document.getElementById("submitBtn");
+    const result = document.getElementById("result");
+
+    // Field names deliberately match the training data's own column names
+    // (including the units in the labels) -- the K-Means artifact's scaler
+    // was fit on columns named exactly this way.
+    const payload = {
+      "Age": parseInt(document.getElementById("age").value),
+      "Annual Income (k$)": parseFloat(document.getElementById("income").value),
+      "Spending Score (1-100)": parseFloat(document.getElementById("spending").value),
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Assigning...";
+    result.className = "";
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Server responded ${response.status}: ${text.slice(0, 200)}`);
+      }
+      const data = await response.json();
+      result.className = "show ok";
+      result.innerHTML =
+        `Model: ${data.model}` +
+        `<div class="figure">Cluster ${data.assigned_cluster}</div>`;
+    } catch (err) {
+      result.className = "show err";
+      result.textContent = "Request failed: " + err.message +
+        " (is api.py running on http://127.0.0.1:5000 ?)";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Assign Segment";
+    }
+  });
+</script>
+</body>
+</html>
