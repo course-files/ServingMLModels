@@ -106,7 +106,7 @@
 
 ## Setup Instructions
 
-- [Setup Instructions](./admin_instructions/instructions_for_project_setup.md)
+- [Setup Instructions](./admin_instructions/0_instructions_for_project_setup.md)
 
 ## Lab Manual
 
@@ -126,4 +126,4 @@ Refer to the files below, in the order specified, for more details:
 
 ## Cleanup Instructions (to be done after submitting the lab)
 
-- [Cleanup Instructions](/admin_instructions/instructions_for_postlab_cleanup.md)
+- [Cleanup Instructions](/admin_instructions/2_instructions_for_project_teardown.md)
