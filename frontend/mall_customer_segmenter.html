@@ -59,11 +59,78 @@
   }
   button:hover { background: var(--accent-dark); }
   button:disabled { background: #c4b5fd; cursor: default; }
+
+  /* ---- Result panel ---- */
   #result { margin-top: 20px; padding: 16px; border-radius: 10px; font-size: 14px; display: none; }
   #result.show { display: block; }
   #result.ok { background: var(--ok-bg); color: var(--accent-dark); }
   #result.err { background: var(--err-bg); color: var(--err-text); }
-  #result .figure { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  #result .figure { font-size: 22px; font-weight: 700; margin-top: 4px; margin-bottom: 4px; }
+  #result .model-line { font-size: 12px; color: var(--muted); }
+
+  /* ---- Segment profile cards (revealed only after a prediction) ---- */
+  .segment-profiles {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .segment-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 10px 40px 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    opacity: 0.55;
+    transition: opacity 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .segment-row .cluster-id {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ede9fe;
+    color: var(--accent-dark);
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .segment-row .name { font-weight: 600; font-size: 13.5px; }
+  .segment-row .stats {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .segment-row.matched {
+    opacity: 1;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+    background: #faf9ff;
+  }
+  .segment-row.matched .cluster-id {
+    background: var(--accent);
+    color: #fff;
+  }
+  .segment-row.matched::after {
+    content: "Assigned";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--accent);
+    padding: 3px 8px;
+    border-radius: 999px;
+    line-height: 1;
+  }
 </style>
 </head>
 <body>
@@ -83,55 +150,6 @@
       <label for="spending">Spending Score (1-100)</label>
       <input type="number" id="spending" min="1" max="100" value="72" required>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Cluster</th>
-            <th>Age</th>
-            <th>Income</th>
-            <th>Spending</th>
-            <th>Segment</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>0</td>
-            <td>Young (~33)</td>
-            <td>High</td>
-            <td>High</td>
-            <td><strong>Premium targets</strong> — young, affluent, high spenders</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Older (~56)</td>
-            <td>Mid</td>
-            <td>Mid</td>
-            <td><strong>Average, mature customers</strong></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Middle-aged (~40)</td>
-            <td>High</td>
-            <td>Low</td>
-            <td><strong>High income, low engagement</strong> — affluent but untapped</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Older (~46)</td>
-            <td>Low</td>
-            <td>Low</td>
-            <td><strong>Frugal / budget-conscious</strong></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Young (~25)</td>
-            <td>Low-mid</td>
-            <td>High</td>
-            <td><strong>Young enthusiastic spenders</strong> — high spending relative to income</td>
-          </tr>
-        </tbody>
-      </table>
-
       <button type="submit" id="submitBtn">Assign Segment</button>
     </form>
 
@@ -139,7 +157,46 @@
   </div>
 
 <script>
-  const API_URL = "http://127.0.0.1:5000/api/v1/models/mall-customer-segmenter/predictions";
+  const protocol = window.location.protocol;                 // "http:", "https:", or "file:"
+  const hostname = window.location.hostname || "127.0.0.1";  // hostname is "" for a file:// page
+  const isSecure = protocol === "https:";
+
+  const API_ORIGIN = `${isSecure ? "https" : "http"}://${hostname}:${isSecure ? "443" : "5000"}`;
+  const API_URL = `${API_ORIGIN}/api/v1/models/mall-customer-segmenter/predictions`;
+
+  // const API_URL = "http://127.0.0.1:5000/api/v1/models/mall-customer-segmenter/predictions";
+
+  // Business-facing profile for each cluster id the K-Means model can
+  // return. This is reference material for a decision maker, so it only
+  // appears once a prediction has actually run -- shown here, not buried
+  // in the form, and with the matching cluster visually picked out.
+  const SEGMENT_PROFILES = {
+    0: { name: "Premium targets", stats: "Young (~33) &middot; High income &middot; High spending",
+         note: "Young, affluent, high spenders" },
+    1: { name: "Average, mature customers", stats: "Older (~56) &middot; Mid income &middot; Mid spending",
+         note: "Steady, middle-of-the-road behavior" },
+    2: { name: "High income, low engagement", stats: "Middle-aged (~40) &middot; High income &middot; Low spending",
+         note: "Affluent but currently untapped" },
+    3: { name: "Frugal / budget-conscious", stats: "Older (~46) &middot; Low income &middot; Low spending",
+         note: "Price-sensitive, low discretionary spend" },
+    4: { name: "Young enthusiastic spenders", stats: "Young (~25) &middot; Low-mid income &middot; High spending",
+         note: "High spending relative to income" },
+  };
+
+  function renderSegmentProfiles(assignedCluster) {
+    const rows = Object.entries(SEGMENT_PROFILES).map(([clusterId, profile]) => {
+      const isMatch = Number(clusterId) === assignedCluster;
+      return `
+        <div class="segment-row${isMatch ? " matched" : ""}">
+          <div class="cluster-id">${clusterId}</div>
+          <div>
+            <div class="name">${profile.name}</div>
+            <div class="stats">${profile.stats}</div>
+          </div>
+        </div>`;
+    }).join("");
+    return `<div class="segment-profiles">${rows}</div>`;
+  }
 
   document.getElementById("predictForm").addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -170,14 +227,18 @@
         throw new Error(`Server responded ${response.status}: ${text.slice(0, 200)}`);
       }
       const data = await response.json();
+      const profile = SEGMENT_PROFILES[data.assigned_cluster];
+
       result.className = "show ok";
       result.innerHTML =
-        `Model: ${data.model}` +
-        `<div class="figure">Cluster ${data.assigned_cluster}</div>`;
+        `<div class="model-line">Model: ${data.model}</div>` +
+        `<div class="figure">Cluster ${data.assigned_cluster}${profile ? " -- " + profile.name : ""}</div>` +
+        (profile ? `<div style="font-size:13px;color:var(--muted);margin-bottom:4px;">${profile.note}</div>` : "") +
+        renderSegmentProfiles(data.assigned_cluster);
     } catch (err) {
       result.className = "show err";
       result.textContent = "Request failed: " + err.message +
-        " (is api.py running on http://127.0.0.1:5000 ?)";
+        ` (is api.py running and reachable at ${API_ORIGIN} ?)`;
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Assign Segment";

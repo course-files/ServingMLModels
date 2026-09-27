@@ -115,10 +115,9 @@ Refer to the files below, in the order specified, for more details:
 1. [api_consumer.py](frontend/api_consumer.py)
 2. [api.py](api.py)
 3. [api_consumer_from_dev_flask.py](frontend/api_consumer_from_dev_flask.py)
-4. [api_test_DT_classifier.html](frontend/api_test_DT_classifier.html)
-5. [api_test_DT_regressor.html](frontend/api_test_DT_regressor.html)
-6. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md)
-7. [Publicly Serving the Model for Validation by Domain Experts](publicly_serving_the_model_for_validation_by_domain_experts.md)
+4. [index.html](frontend/index.html)
+5. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md)
+6. [Publicly Serving the Model for Validation by Domain Experts](publicly_serving_the_model_for_validation_by_domain_experts.md)
 
 ## Lab Submission Instructions
 
