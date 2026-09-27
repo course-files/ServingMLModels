@@ -12,10 +12,27 @@ import pandas as pd
 # -----------------------------------------------------------------------
 @st.cache_resource
 def load_artifacts():
-    regression_pipeline = joblib.load("lasso_regressor_for_sme_revenue.joblib")
-    classification_pipeline = joblib.load("svc_classifier_for_sme_credit_risk.joblib")
-    clustering_artifact = joblib.load("kmeans_mall_customer_segmentation.joblib")
-    arm_artifact = joblib.load("apriori_recommendation_rules.joblib")
+    # regression_pipeline = joblib.load("lasso_regressor_for_sme_revenue.joblib")
+    # classification_pipeline = joblib.load("svc_classifier_for_sme_credit_risk.joblib")
+    # clustering_artifact = joblib.load("kmeans_mall_customer_segmentation.joblib")
+    # arm_artifact = joblib.load("apriori_recommendation_rules.joblib")
+    MODEL_DIR = "./model"
+
+    regression_pipeline = joblib.load(
+        os.path.join(MODEL_DIR, "lasso_regressor_for_sme_revenue.joblib")
+    )
+
+    classification_pipeline = joblib.load(
+        os.path.join(MODEL_DIR, "svc_classifier_for_sme_credit_risk.joblib")
+    )
+
+    clustering_artifact = joblib.load(
+        os.path.join(MODEL_DIR, "kmeans_mall_customer_segmentation.joblib")
+    )
+
+    arm_artifact = joblib.load(
+        os.path.join(MODEL_DIR, "apriori_recommendation_rules.joblib")
+    )
     return regression_pipeline, classification_pipeline, clustering_artifact, arm_artifact
 
 regression_pipeline, classification_pipeline, clustering_artifact, arm_artifact = load_artifacts()
