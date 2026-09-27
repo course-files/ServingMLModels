@@ -33,9 +33,9 @@
 ├── README.md
 ├── RecommendedCitation.bib
 ├── admin_instructions
-│   ├── instructions_for_postlab_cleanup.md
-│   ├── instructions_for_project_setup.md
-│   └── instructions_for_python_installation.md
+│   ├── 0_instructions_for_project_setup.md
+│   ├── 1_instructions_for_python_installation.md
+│   └── 2_instructions_for_project_teardown.md
 ├── api.py
 ├── app_server_reverse_proxy_server_setup.md
 ├── assets
@@ -43,12 +43,9 @@
 │       ├── Hf-logo-with-title.svg
 │       ├── Render-logo-Black.png
 │       ├── Streamlit-logo-primary-colormark-darktext.png
+│       ├── gunicorn-logo-png-transparent.png
 │       └── ssh_student_at_localhost_p_2222.jpeg
 ├── cleanup_instructions.md
-├── container-volumes
-│   ├── nginx
-│   │   └── nginx.conf
-│   └── ubuntu
 ├── docker-compose-dev.yaml
 ├── docker-compose-prod.yaml
 ├── docker-compose.yaml
@@ -62,30 +59,22 @@
 ├── frontend
 │   ├── Proxies.png
 │   ├── RequestFlow.jpg
-│   ├── RequestFlow.png
 │   ├── api_consumer.py
 │   ├── api_consumer_from_dev_flask.py
-│   ├── api_test_DT_classifier.html
-│   ├── api_test_DT_regressor.html
-│   └── index.html
+│   ├── ecommerce_recommender.html
+│   ├── index.html
+│   ├── mall_customer_segmenter.html
+│   ├── sme_credit_risk_classifier.html
+│   └── sme_revenue_regressor.html
 ├── huggingface-spaces-using-gradio
 │   ├── app.py
 │   └── requirements.txt
 ├── lab_submission_instructions.md
 ├── model
-│   ├── decisiontree_classifier_baseline.pkl
-│   ├── decisiontree_regressor_optimum.pkl
-│   ├── knn_classifier_optimum.pkl
-│   ├── label_encoders_1b.pkl
-│   ├── label_encoders_2.pkl
-│   ├── label_encoders_4.pkl
-│   ├── label_encoders_5.pkl
-│   ├── naive_Bayes_classifier_optimum.pkl
-│   ├── onehot_encoder_3.pkl
-│   ├── random_forest_classifier_optimum.pkl
-│   ├── scaler_4.pkl
-│   ├── scaler_5.pkl
-│   └── support_vector_classifier_optimum.pkl
+│   ├── apriori_recommendation_rules.joblib
+│   ├── kmeans_mall_customer_segmentation.joblib
+│   ├── lasso_regressor_for_sme_revenue.joblib
+│   └── svc_classifier_for_sme_credit_risk.joblib
 ├── publicly_serving_the_model_for_validation_by_domain_experts.md
 ├── requirements
 │   ├── base.txt
@@ -101,7 +90,7 @@
     ├── app.py
     └── requirements.txt
 
-15 directories, 58 files
+12 directories, 50 files
 ```
 
 ## Setup Instructions
@@ -112,12 +101,12 @@
 
 Refer to the files below, in the order specified, for more details:
 
-1. [api_consumer.py](frontend/api_consumer.py)
-2. [api.py](api.py)
-3. [api_consumer_from_dev_flask.py](frontend/api_consumer_from_dev_flask.py)
-4. [index.html](frontend/index.html)
-5. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md)
-6. [Publicly Serving the Model for Validation by Domain Experts](publicly_serving_the_model_for_validation_by_domain_experts.md)
+1. [api_consumer.py](frontend/api_consumer.py) ← How to use `requests` in Python
+2. [api.py](api.py) ← How to create a RESTish API using Flask in Python
+3. [api_consumer_from_dev_flask.py](frontend/api_consumer_from_dev_flask.py) ← How to consume the RESTish API from a Flask development server
+4. [index.html](frontend/index.html) ← Example of a frontend (HTML, CSS, and JS) that consumes from the API endpoint
+5. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md) ← How to use Nginx as a reverse proxy server to serve the Flask application through Gunicorn
+6. [Publicly Serving the Model for Validation by Domain Experts](publicly_serving_the_model_for_validation_by_domain_experts.md) ← How to serve the model through Hugging Face, Streamlit, and Render
 
 ## Lab Submission Instructions
 

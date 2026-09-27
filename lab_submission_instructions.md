@@ -1,7 +1,5 @@
 # Lab Submission Instruction
 
-## BBT 4206 - CAT 1 (Takeaway) - Due Date: 28th February 2026
-
 ## Student Details and Individual Member Contributions
 
 **Name of the team on GitHub Classroom:**
@@ -52,111 +50,93 @@
 
 ## Video Demonstration
 
-Submit the link to a short video (not more than 5 minutes) demonstrating your solution. Please ensure that the lecturer has rights to view the video.
+Submit the link to a short video (**not more than 10 minutes**) demonstrating your complete solution at whichever difficulty level you chose. Please ensure that the lecturer has rights to view the video.
+
+At minimum, the video must show, in one continuous walkthrough:
+
+1. `api.py` running **locally**, with a live request/response against each model endpoint you implemented.
+2. If you attempted the Intermediate or Advanced tier: the same API running inside its **Gunicorn + Nginx Docker container**, reached through the reverse proxy, not the Flask development server.
+3. If you attempted the Advanced tier: your **Hugging Face Space** and your **Streamlit Community Cloud app**, each opened live in a browser, with at least one prediction made on each tab, and your **Render**-hosted API answering a request from Postman or `curl`.
+
+**Why this matters for grading:** free-tier public deployments are not guaranteed to still exist by the time this is graded. The video is treated as the authoritative record of what was actually working at submission time; a broken link at grading time is not penalized if the video clearly shows that deployment working.
 
 Note that you are required to submit the link to the video and NOT the video itself. The video should NOT be uploaded to your repository—that would be a misuse of GitHub.
 
 **Link to the video:**
 
-## Public URL
+## Public URLs
 
-**Specify the public URL to the Gradio/Streamlit App**:
+Fill in only the rows that apply to your chosen difficulty level (see Part C below). Leave a row blank if your tier does not require that deployment target.
+
+| **Deployment target**                             | **URL** |
+|:--------------------------------------------------|:--------|
+| Render (the full `api.py`, all endpoints)         |         |
+| Hugging Face Space (Gradio, one tab per model)    |         |
+| Streamlit Community Cloud app (one tab per model) |         |
 
 ---
 
 ## Scenario
 
-You have trained various models for regression and classification problems.
-You have also used k-Means clustering to identify clusters of clients.
-Lastly, you have created association rules to identify products that are frequently bought together.
+Across earlier labs, **your group** was assigned its own dataset and trained your own models for four distinct tasks:
 
-You are now required to create an API that serves the models and gives recommendations based on the association rules.
-This API can be used by systems developed by other teams in the organization using different programming languages.
+1. A **regression** task
+2. A **classification** task
+3. A **k-Means clustering** task
+4. An **Apriori association-rule mining** task
 
-### Part A
+Different groups worked with different datasets and, in some cases, different algorithms for each task -- there is no single shared reference repository or model list for the whole class. Wherever this document refers to "your regressor," "your classifier," "your clustering model," or "your recommender," it means **whichever model your own group already trained and saved for that task**, not a specific named algorithm.
 
-- Refer to the lab on Regression and Classification available [here](https://github.com/course-files/RegressionAndClassification) to understand how the following models were trained:
-  - Decision tree regressor
-  - Decision tree classifier
-  - Naive Bayes classifier
-  - K-Nearest Neighbors (kNN) classifier
-  - Support Vector Machine (SVM) classifier
-  - Random Forest classifier
-- Update [api.py](api.py) to include end-points to serve the following models loaded from disk:
-  - Naive Bayes classifier
-  - K-Nearest Neighbors (kNN) classifier
-  - Support Vector Machine (SVM) classifier
-  - Random Forest classifier
+You are now required to build a single Flask API (`api.py`) that serves **your own group's four models**, loaded from disk (never retrained inside `api.py`), and to demonstrate that API running correctly across a growing number of deployment surfaces depending on the difficulty tier you choose.
 
-### Part B
+### Part A: Regression and Classification
 
-- Refer to the lab on Clustering and Association Rule Mining available [here](https://github.com/course-files/ClusteringandAssociationRuleMining) to understand how the following clusters and association rules were created:
-  - k-Means clustering
-  - Apriori algorithm for association rule mining based on the "groceries" dataset by Hahsler et al. (2011) that contains 9,835 market basket transactions
-- Update [api.py](api.py) to include end-points to serve the following:
-  - A recommender that recommends products to a client based on the association rules created in the previous lab. The association rules should be loaded from disk.
-  - A classifier that predicts the cluster to which a client belongs to. The classifier should be loaded from disk.
+- Locate the trained regression and classification model files your group produced and saved in your earlier labs on Regression and Classification.
+- Update [api.py](api.py) to include end-points that load these two models from disk and serve predictions from them.
 
-**Note 1:** **`api.py` is NOT production-grade as it is.** It is only meant for demonstration purposes.
-Scalability and security must be taken into consideration before deploying an API in a production environment.
+### Part B: Clustering and Association Rule Mining
 
-**Note 2:** Students often treat the API as an afterthought, focusing only on training ML models.
-In practice, the API is the product — it is how others interact with your model.
-The "hidden" learning here is that the delivery mechanism (API design, usability, error handling, and even documentation) often matters more to stakeholders in the industry than the models themselves.
+- Locate the trained clustering model and the association rules your group produced and saved in your earlier labs on Clustering and Association Rule Mining.
+- Update [api.py](api.py) to include end-points that:
+  - Load the clustering model from disk and predict which cluster a new client belongs to
+  - Load the association rules from disk and recommend products based on them
+
+**Note 1:** **`api.py` is NOT production-grade as it is.** It is only meant for demonstration purposes. Scalability and security must be taken into consideration before deploying an API in a production environment.
+
+**Note 2:** Some students often treat the API as an afterthought, focusing only on training ML models. In practice, **the API is the product** -- it is how others interact with your model. The "hidden" learning here is that the delivery mechanism (API design, usability, error handling, and even documentation) often matters more to stakeholders in the industry than the models themselves.
+
+### Part C: Deployment Breadth (Read Before Choosing Your Tier)
+
+All three tiers below ask you to serve **the same four models** (your regressor, your classifier, your clustering model, your recommender) from **one, unmodified `api.py`**. The model files and the Flask routes do not change between tiers -- only how many different places that one working API is shown to run correctly.
 
 **Baseline (Required):**
 
-- Update [api.py](api.py) to include end-points to serve at least three of the models trained in the previous labs since Business Intelligence I.
+- Update `api.py` to serve **at least three of your four** models, loaded from disk.
+- Run and demonstrate `api.py` **locally** with Flask's development server, with a successful request against each implemented endpoint.
 
 **Intermediate (Recommended):**
 
-- Update [api.py](api.py) to include end-points to serve the following models:
-  - Naive Bayes classifier
-  - K-Nearest Neighbors (kNN) classifier
-  - Support Vector Machine (SVM) classifier
-  - Random Forest classifier
-
-- Update [api.py](api.py) to include end-points to serve the following:
-  - A recommender that recommends products to a client based on the association rules created in the previous lab
+- Update `api.py` to serve **all four** of your models, loaded from disk.
+- Dockerize your Flask API using **Gunicorn**, and place it behind an **Nginx** reverse proxy (see the reverse-proxy lab notes for the full Docker Compose setup).
+- Deploy the same, unmodified `api.py` to **Render**, and demonstrate a real request against it from outside your own machine (cURL or Postman).
 
 **Advanced (Optional):**
 
-- Update [api.py](api.py) to include end-points to serve the following:
-  - A classifier that predicts the cluster to which a client belongs to
-- Create a web page(s) (Basic HTML, CSS, and Vanilla JavaScript) that demonstrates the use of the API
-- Implement basic error handling (e.g., missing inputs).
-- Flask comes with a development server (good for testing in development, bust unsafe for production).
-In production, you need a server that can handle many users, concurrency, and failures. That is where **Gunicorn** comes in. It is a Web Server Gateway Interface (WSGI) server built for production.
-- Instead of installing Flask + Gunicorn manually on your machine, you put everything into a Docker image. That image is like a sealed box: it contains your Python code, dependencies, and Gunicorn.
-When you run the container, it behaves like a lightweight server.
-- How the pieces should fit together:
-  - Create a Dockerfile to tell Docker how to build the image (Python, install dependencies, run Gunicorn).
-  - Build the Docker image: A one-time process to create a reusable package.
-  - Run the container: Starts Gunicorn, serving your Flask app (runs the Flask app and handles requests).
+- Everything required for Intermediate, plus:
+  - Create a web page (or pages) using Basic HTML, CSS, and Vanilla JavaScript that demonstrates the use of the API
+  - Implement basic error handling (e.g., missing inputs)
+  - Build **one Gradio app with a tab per model** (all four of your models) and publish it as a **Hugging Face Space**
+  - Build **one Streamlit app with a tab per model**, covering the same four models, and publish it on **Streamlit Community Cloud**
+  - All deployment targets -- local, Dockerized/Nginx, Render, Hugging Face, and Streamlit -- must serve models loaded **from the same trained artifacts**; retraining different models per platform does not satisfy this requirement
 
-- Dockerize (wrap everything into a container that can run anywhere) your Flask API using Gunicorn to make it "production-ready". Make use of a reverse-proxy (Nginx) to shield Gunicorn from the Internet.
+Why this is production-relevant beyond the model itself:
 
-- Why this is production-friendly
-  - Portability: the same image runs anywhere (laptop, server, cloud).
-  - Consistency: no “but it works on my machine” problems.
-  - Isolation: your app runs in its own environment, safe from system changes.
-  - Scalability: you can run more containers if you need more capacity.
+- **Portability:** the same container image and the same trained artifacts run unmodified on your laptop, inside Docker, and on a managed cloud host.
+- **Consistency:** no "but it works on my machine" gap between what you demo locally and what a domain expert sees on a public URL.
+- **Separation of concerns:** a REST API (Render), a no-code demo UI (Hugging Face/Streamlit), and your own frontend (the Advanced-tier HTML pages) are three different ways of exposing the *same* underlying models to three different kinds of user -- a developer integrating your API, a non-technical domain expert validating it, and an end customer.
 
-**For all 3 levels (baseline, intermediate, and advanced):**
+---
 
-- Host any one of the models publicly as either a Gradio app on Hugging Face Spaces or a Streamlit App on Streamlit Community Cloud.
+## Marking Guide
 
-### Grading Approach
-
-The lab will be marked out of 10 marks.
-
-- Exceeding Expectations: 9–10 marks
-- Meeting Expectations: 6–8 marks
-- Approaching Expectations: 3–5 marks
-- Below Expectations: 0–2 marks
-
-The marks also depend on the chosen level of difficulty such that:
-
-- Advanced (Distinction) >= 8.6 marks
-- Intermediate (Merit) 7.5–8.5 marks
-- Baseline (Pass) >= 6 marks
+Refer to the marking guide available here: [lab_submission_marking_guide.md](lab_submission_marking_guide.md)
