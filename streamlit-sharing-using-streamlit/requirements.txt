@@ -10,3 +10,4 @@ imblearn
 mlxtend==0.25.0
 flask
 flask-cors
+os
