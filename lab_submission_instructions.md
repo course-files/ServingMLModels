@@ -1,4 +1,4 @@
-# Lab Submission Instruction
+# Lab Submission Instructions
 
 ## Student Details and Individual Member Contributions
 

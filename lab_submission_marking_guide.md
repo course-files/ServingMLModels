@@ -2,26 +2,26 @@
 
 This is how your submission will be marked. Every row is checked by **what your API and video actually show working** -- not by which dataset or algorithm you used. Use this guide to check your own work before you submit.
 
-| # | What you need to show | Marks |
-|---|:-----------------------|------:|
-| 1 | Your **regression** endpoint returns a correct prediction, using a model loaded from a saved file (not retrained inside `api.py`) | 20 |
-| 2 | Your **classification** endpoint returns a correct prediction, loaded from a saved file | 20 |
-| 3 | Your **clustering** endpoint returns a correct prediction, loaded from a saved file | 20 |
-| 4 | Your **recommender** (association rules) endpoint returns a correct recommendation, loaded from a saved file | 20 |
-| 5 | Your API is **Dockerized** and served with **Gunicorn** (not the Flask development server) | 5 |
-| 6 | An **Nginx** reverse proxy correctly forwards requests to your containerized API | 5 |
-| 7 | Your **same, unmodified `api.py`** is deployed and reachable live on **Render** | 10 |
-| **Subtotal so far** | | **100** |
+| #                   | What you need to show                                                                                                             |   Marks |
+|---------------------|:----------------------------------------------------------------------------------------------------------------------------------|--------:|
+| 1                   | Your **regression** endpoint returns a correct prediction, using a model loaded from a saved file (not retrained inside `api.py`) |      20 |
+| 2                   | Your **classification** endpoint returns a correct prediction, loaded from a saved file                                           |      20 |
+| 3                   | Your **clustering** endpoint returns a correct prediction, loaded from a saved file                                               |      20 |
+| 4                   | Your **recommender** (association rules) endpoint returns a correct recommendation, loaded from a saved file                      |      20 |
+| 5                   | Your API is **Dockerized** and served with **Gunicorn** (not the Flask development server)                                        |       5 |
+| 6                   | An **Nginx** reverse proxy correctly forwards requests to your containerized API                                                  |       5 |
+| 7                   | Your **same, unmodified `api.py`** is deployed and reachable live on **Render**                                                   |      10 |
+| **Subtotal so far** |                                                                                                                                   | **100** |
 
 **You only need 3 of the 4 model rows (1-4) working to pass the Baseline tier -- the missing one is simply not awarded those marks, nothing is deducted for leaving it out.** All 4 working is required to reach Intermediate or Advanced.
 
 ## Bonus (Advanced tier only) -- up to +10 extra
 
-| # | What you need to show | Bonus marks |
-|---|:-----------------------|------:|
-| 8 | A **Hugging Face Space** (one Gradio app, one tab per model, all four give correct predictions) | +4 |
-| 9 | A **Streamlit Community Cloud app** (one tab per model, all four give correct predictions) | +4 |
-| 10 | A simple **HTML/CSS/JS web page** that demonstrates your API, with basic error handling for missing input | +2 |
+| #  | What you need to show                                                                                     | Bonus marks |
+|----|:----------------------------------------------------------------------------------------------------------|------------:|
+| 8  | A **Hugging Face Space** (one Gradio app, one tab per model, all four give correct predictions)           |          +4 |
+| 9  | A **Streamlit Community Cloud app** (one tab per model, all four give correct predictions)                |          +4 |
+| 10 | A simple **HTML/CSS/JS web page** that demonstrates your API, with basic error handling for missing input |          +2 |
 
 Your total is capped at 100 even if bonus marks would push you higher.
 

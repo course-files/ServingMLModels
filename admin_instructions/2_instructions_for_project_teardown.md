@@ -65,6 +65,16 @@ skipped.
 docker volume rm servingmlmodels_home-student nginx-certs nginx-frontend
 ```
 
+An alternative to the manual steps outlined above is to execute the following
+script:
+
+```shell
+# This is executed to create the required volume directories
+chmod u+x lab_teardown.sh
+sed -i 's/\r$//' lab_teardown.sh docker-compose-dev.yaml
+./lab_teardown.sh
+```
+
 ## Environment Variables in the `.env` File
 
 - Delete `.env` (it holds local secrets/config and should never be committed

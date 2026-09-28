@@ -15,6 +15,16 @@ Create the following folders, which will be mapped to the container volumes:
 - `container-volumes\ubuntu\home-student`
 - `container-volumes\nginx\certs`
 
+You can do this manually, or execute the `lab_setup.sh` script from
+the root of the repository:
+
+```shell
+# This is executed to create the required volume directories
+chmod u+x lab_setup.sh
+sed -i 's/\r$//' lab_setup.sh
+./lab_setup.sh
+```
+
 Create the `.env` file based on the example provided in [env.example](env.example).
 
 Build and start just the Ubuntu container:
@@ -168,6 +178,8 @@ Access it from another terminal:
 ```shell
 ssh student@localhost -p 2222
 ```
+
+![ssh](./assets/images/ssh_student_at_localhost_p_2222.jpeg)
 
 **Note:** this installation is not "baked" into `Dockerfile.ubuntu` -- it only exists inside the running container. If you recreate the container (`docker compose down` followed by `up`), you will need to repeat this step; only `/home/student` survives a recreation.
 
