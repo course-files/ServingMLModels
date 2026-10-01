@@ -20,6 +20,24 @@ and never manually reorders columns before calling .predict(). It builds a
 DataFrame straight from the incoming JSON and hands it to the pipeline as-is.
 This is the main lesson of the lab: "the pipeline IS the deployment artifact."
 
+Confirm if Port 5000 is available and, if not, identify the application using it.
+Execute the following in Git Bash:
+
+`netstat -ano | findstr :5000`
+`tasklist //FI "PID eq <PID from the previous output>"`
+
+Example: `tasklist //FI "PID eq 9084"`
+
+To kill the application:
+
+`taskkill //PID <PID from the previous output> //F`
+
+Example: `taskkill //PID 9084 //F`
+
+Alternatively, run the following Python script as a "pre-flight check":
+
+`python check_port_5000.py`
+
 Run this file directly to start a local development server:
 
     python api.py
@@ -272,7 +290,7 @@ if __name__ == "__main__":
     # debugger on errors -- convenient in class, but NEVER use debug=True in
     # a deployed/public environment (it can expose a remote code execution
     # console to anyone who can reach the server).
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
 
     # Production-style alternative (no debugger, no auto-reload):
     # app.run(debug=False, host="0.0.0.0", port=5000)
