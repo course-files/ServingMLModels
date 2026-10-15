@@ -146,14 +146,6 @@ ssl_certificate     /etc/nginx/certs/selfsigned.crt;
 ssl_certificate_key /etc/nginx/certs/selfsigned.key;
 ```
 
-**Important -- reload, do not rebuild:** both `nginx.conf` and the certs folder are mounted into the nginx container as live, read-only volumes (see `docker-compose-dev.yaml`). That means editing `nginx.conf` or replacing the certificate files does **not** require rebuilding the Nginx image. It does require telling the already-running Nginx process to re-read them:
-
-```shell
-docker compose restart nginx
-```
-
-If `https://127.0.0.1/` still shows the old certificate or the old config after a change, this is almost always the missing step.
-
 ## Step 1.2: [EXTRA] Install and Use SSH
 
 Install and use SSH to understand the different use cases of SSL and SSH.
@@ -183,7 +175,7 @@ ssh student@localhost -p 2222
 
 **Note:** this installation is not "baked" into `Dockerfile.ubuntu` -- it only exists inside the running container. If you recreate the container (`docker compose down` followed by `up`), you will need to repeat this step; only `/home/student` survives a recreation.
 
-## Step 2: Use Docker Compose
+## Step 2: Start the Application Server
 
 ```shell
 docker compose \
@@ -201,6 +193,16 @@ Docker Compose uses two Dockerfiles here:
 1. [Dockerfile.flask-gunicorn-app](dockerfiles/Dockerfile.flask-gunicorn-app)
 2. [Dockerfile.nginx](dockerfiles/Dockerfile.nginx)
 
+Scale the number of Gunicorn application servers in the backend to 3:
+
+```shell
+docker compose \
+  -f docker-compose.yaml \
+  -f docker-compose-dev.yaml \
+  up -d \
+  --scale flask-gunicorn-app=3
+```
+
 **After scaling, restart Nginx once.** Nginx resolves the `flask-gunicorn-app` hostname to its replicas' IP addresses a single time, when it starts -- it does not keep checking afterwards. If you change the number of replicas (`--scale flask-gunicorn-app=2`) *after* Nginx is already running, tell it to look again:
 
 ```shell
@@ -209,13 +211,11 @@ docker compose restart nginx
 
 Doing the scale and the (re)start of Nginx as two separate steps, in that order, avoids a timing race where Nginx might start before all replicas are visible to it and permanently miss one.
 
-## Step 3: Create the Application Server
-
-The application server is made up of **Gunicorn**, a Web-Server Gateway Interface (WSGI) application server. **Gunicorn** runs in a **Python** environment to host **Flask** -> Flask serves the model, trained in Python, through an API.
+The application server is made up of **Gunicorn**, a Web-Server Gateway Interface (WSGI) application server. **Gunicorn** runs in a **Python** environment to host **Flask** → Flask serves the model, trained in Python, through an API.
 
 ![Request Flow](frontend/RequestFlow.jpg)
 
-## Step 4: Create the Reverse Proxy
+## Step 3: Understand the Role of NGINX as a Reverse Proxy
 
 The reverse proxy is made up of the **NGINX** web server.
 
@@ -224,11 +224,11 @@ The reverse proxy is made up of the **NGINX** web server.
 A reverse proxy:
 
 - Terminates SSL (handles HTTPS).
-- Routes requests to the right backend service (`/api/` -> Gunicorn, `/` -> static frontend files).
+- Routes requests to the right backend service (`/api/` → Gunicorn, `/` → static frontend files).
 - Load balances between multiple backend instances.
 - Shields backend servers from direct exposure to the internet.
 
-**One consequence worth noticing:** once the frontend and the API are both served through this same Nginx origin (`https://127.0.0.1/`), they are no longer on different origins the way they were in the earlier, direct-to-Flask stage of this lab. If your frontend JavaScript still calls an absolute address like `http://127.0.0.1:5000/api/...`, that call will fail outright, because port 5000/8000 is never published to your host in this setup (see `docker-compose.yaml`'s `expose:` comment) -- the only route to the API now is through Nginx. Update each frontend page's API call to a **relative** path instead:
+**One consequence worth noticing:** once the frontend and the API are both served through this same Nginx origin (`https://127.0.0.1/`), they are no longer on different origins the way they were in the earlier, direct-to-Flask stage of this lab. If your frontend JavaScript still calls an absolute address like `http://127.0.0.1:5000/api/...`, that call will fail outright, because port 5000/8000 is never published to your host in this setup (see `docker-compose.yaml`'s `expose:` comment) -- the only route to the API now is through Nginx. We update each frontend page's API call to a **relative** path instead:
 
 ```javascript
 const API_URL = "/api/v1/models/sme-revenue-regressor/predictions";
@@ -236,6 +236,6 @@ const API_URL = "/api/v1/models/sme-revenue-regressor/predictions";
 
 A relative path is automatically resolved against whatever origin served the page -- so the same file works correctly once it is served through Nginx, with no CORS configuration needed at all (frontend and API are now the same origin).
 
-## Step 5: Confirm your Setup
+## Step 4: Confirm your Setup
 
-You should now be able to reach the Nginx reverse proxy over HTTPS at [https://127.0.0.1/](https://127.0.0.1/) or [https://localhost/](https://localhost/). Requesting the plain `http://` address on port 80 will redirect you to the secured site automatically.
+You should now be able to reach the Nginx reverse proxy via HTTPS at [https://127.0.0.1/](https://127.0.0.1/) or [https://localhost/](https://localhost/). Requesting the plain `http://` address on port 80 will redirect you to the secured site automatically.
