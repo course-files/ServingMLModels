@@ -42,11 +42,7 @@
 ├── app_server_reverse_proxy_server_setup.md
 ├── assets
 │   └── images
-│       ├── Hf-logo-with-title.svg
-│       ├── Render-logo-Black.png
-│       ├── Streamlit-logo-primary-colormark-darktext.png
-│       ├── gunicorn-logo-png-transparent.png
-│       └── ssh_student_at_localhost_p_2222.jpeg
+├── check_port_5000.py
 ├── cleanup_instructions.md
 ├── docker-compose-dev.yaml
 ├── docker-compose-prod.yaml
@@ -58,9 +54,15 @@
 │       ├── Dockerfile.ubuntu
 │       └── entrypoint.sh
 ├── env.example
+├── fastapi-version
+│   ├── Dockerfile.fastapi-uvicorn-app
+│   ├── Procfile
+│   ├── README.md
+│   ├── api_consumer_from_dev_fastapi.py
+│   ├── api_fastapi.py
+│   ├── docker-compose-fastapi.yaml
+│   └── requirements.txt
 ├── frontend
-│   ├── Proxies.png
-│   ├── RequestFlow.jpg
 │   ├── api_consumer.py
 │   ├── api_consumer_from_dev_flask.py
 │   ├── ecommerce_recommender.html
@@ -71,7 +73,10 @@
 ├── huggingface-spaces-using-gradio
 │   ├── app.py
 │   └── requirements.txt
+├── lab_setup.sh
 ├── lab_submission_instructions.md
+├── lab_submission_marking_guide.md
+├── lab_teardown.sh
 ├── model
 │   ├── apriori_recommendation_rules.joblib
 │   ├── kmeans_mall_customer_segmentation.joblib
@@ -86,13 +91,44 @@
 │   ├── dev.lock.txt
 │   ├── dev.txt
 │   └── prod.txt
+├── roughwork
+│   ├── Docker-Compose-without-https.yaml
+│   ├── OLD_Dockerfile.flask-gunicorn-app
+│   ├── claude
+│   │   ├── Dockerfile.flask-gunicorn-app
+│   │   ├── Dockerfile.nginx
+│   │   ├── app_server_reverse_proxy_server_setup.md
+│   │   ├── docker-compose-dev.yaml
+│   │   ├── docker-compose-prod.yaml
+│   │   ├── docker-compose.yaml
+│   │   └── nginx.conf
+│   ├── frontend-OLD
+│   │   ├── api_test_DT_classifier.html
+│   │   ├── api_test_DT_regressor.html
+│   │   └── index.html
+│   ├── model-OLD
+│   │   ├── decisiontree_classifier_baseline.pkl
+│   │   ├── decisiontree_regressor_optimum.pkl
+│   │   ├── knn_classifier_optimum.pkl
+│   │   ├── label_encoders_1b.pkl
+│   │   ├── label_encoders_2.pkl
+│   │   ├── label_encoders_4.pkl
+│   │   ├── label_encoders_5.pkl
+│   │   ├── naive_Bayes_classifier_optimum.pkl
+│   │   ├── onehot_encoder_3.pkl
+│   │   ├── random_forest_classifier_optimum.pkl
+│   │   ├── scaler_4.pkl
+│   │   ├── scaler_5.pkl
+│   │   └── support_vector_classifier_optimum.pkl
+│   ├── nginx-without-https.conf
+│   └── requirements.txt
 ├── rules
 ├── runtime.txt
 └── streamlit-sharing-using-streamlit
     ├── app.py
     └── requirements.txt
 
-12 directories, 50 files
+17 directories, 81 files
 ```
 
 ## Setup Instructions
