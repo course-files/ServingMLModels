@@ -156,6 +156,39 @@ used throughout the lab will route to the FastAPI container instead of the
 Flask one, with no change needed to the frontend HTML pages or anything else downstream of the
 API.
 
+## Running it in Render
+
+Steps:
+
+1. Make sure `./model/` (all four `.joblib` files) is committed to your repository -- Render builds from your Git history, so files that exist only on your own machine will not be deployed.
+2. Create a `Procfile` in the `fastapi-version` directory, containing exactly:
+
+   ```text
+   web: gunicorn -k uvicorn_worker.UvicornWorker -w 4 -b 0.0.0.0:$PORT api_fastapi:app
+   ```
+
+   Render auto-detects and runs this on deploy.
+3. Push your changes to GitHub.
+4. Go to [https://dashboard.render.com](https://dashboard.render.com)
+5. Click **+ New -> Web Service**
+6. Connect your GitHub repository
+7. Select the branch (`main`). Render auto-detects Python.
+8. Specify the name of your service
+9. Under "Build Command", use:
+
+   ```text
+   pip install -r requirements.txt -c ../requirements/constraints.txt
+   ```
+
+10. Under "Start Command", use:
+
+   ```text
+   gunicorn -k uvicorn_worker.UvicornWorker -w 4 -b 0.0.0.0:$PORT api_fastapi:app
+   ```
+11. Select the "Free" plan
+12. Click "Deploy Web Service"
+13. Copy the URL of your deployed service
+
 ## Key changes from the Flask version
 
 Everything below is also explained in comments at the point it happens in
