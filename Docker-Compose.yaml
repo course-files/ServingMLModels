@@ -22,8 +22,13 @@ services:
     expose:
       - "8000"
 
+  fastapi-uvicorn-app:
+    image: servingmlmodels-fastapi-uvicorn-app:1.0.0
+    expose:
+      - "8000"
+
   nginx:
-    image: servingmlmodels-nginx
+    image: servingmlmodels-nginx:1.0.0
     # Wait for flask-gunicorn-app's CONTAINER to start before starting nginx.
     # NOTE: this only waits for the container to start, not for Gunicorn
     # inside it to be ready to accept connections -- see the sequencing

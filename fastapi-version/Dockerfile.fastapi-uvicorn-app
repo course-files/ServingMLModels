@@ -1,0 +1,65 @@
+# fastapi-version/Dockerfile.fastapi-uvicorn-app
+#
+# This is the FastAPI equivalent of dockerfiles/Dockerfile.flask-gunicorn-app.
+# It follows the exact same two stage pattern for the exact same reason:
+# build tools (compilers, dev headers) are needed only to install some
+# Python packages, not to run the app afterward, so Stage 1 installs them
+# and Stage 2 copies across only the finished, installed packages and the
+# application code, leaving the compilers behind. This keeps the final
+# image smaller.
+#
+# IMPORTANT: build this image from the REPOSITORY ROOT, not from inside
+# fastapi-version/, the same way dockerfiles/Dockerfile.flask-gunicorn-app
+# is already built from the repository root. This Dockerfile needs access
+# to both fastapi-version/ and the shared model/ folder at the same time,
+# and a build context only ever contains one directory and its
+# subdirectories, so the root is the only context that has both.
+#
+#   docker build -f fastapi-version/Dockerfile.fastapi-uvicorn-app -t servingmlmodels-fastapi-uvicorn-app:1.0.0 .
+#
+# ============================
+# Stage 1: Build dependencies
+# ============================
+FROM python:3.12.10-slim AS builder
+
+WORKDIR /build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY fastapi-version/requirements.txt ./requirements.txt
+COPY requirements/constraints.txt ./requirements/constraints.txt
+
+# Installed into /install, the same pattern as Dockerfile.flask-gunicorn-app,
+# so Stage 2 can copy across only the finished packages.
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt -c requirements/constraints.txt
+
+COPY fastapi-version/api_fastapi.py .
+# The model/ folder is shared between both the Flask and FastAPI tracks; it
+# is not duplicated inside fastapi-version/. As with the Flask image, this
+# image must be rebuilt any time the models under model/ are re-fit, or the
+# container will keep serving the old ones.
+COPY model/ model/
+
+# ============================
+# Stage 2: Runtime image
+# ============================
+FROM python:3.12.10-slim
+
+WORKDIR /opt/app-smm-fastapi
+ENV PYTHONPATH=/opt/app-smm-fastapi
+
+COPY --from=builder /install /usr/local
+COPY --from=builder /build /opt/app-smm-fastapi
+
+EXPOSE 8000
+
+# Gunicorn is the process manager here, exactly as in the Flask image (same
+# worker count, same port). The one difference is the worker class: "-k
+# uvicorn_worker.UvicornWorker" tells Gunicorn to run each worker process
+# as a Uvicorn ASGI worker instead of its default synchronous WSGI worker,
+# which is what FastAPI requires. Gunicorn still does everything it did
+# for the Flask version: it manages the worker processes, restarts a
+# worker if it crashes, and binds the shared port.
+CMD ["gunicorn", "-k", "uvicorn_worker.UvicornWorker", "--chdir", "/opt/app-smm-fastapi", "-w", "5", "-b", "0.0.0.0:8000", "api_fastapi:app"]

@@ -1,0 +1,41 @@
+# fastapi-version/requirements.txt
+#
+# This file lists what the FastAPI track needs, in place of
+# requirements/base.txt and requirements/prod.txt (which list flask and
+# flask-cors instead). The machine learning packages are the same as the
+# Flask track, because both files load the exact same four .joblib
+# artifacts and run the exact same pipelines; only the web framework
+# changes.
+requests
+numpy
+pandas
+joblib
+scikit-learn
+imbalanced-learn
+imblearn
+mlxtend
+
+# Web framework (replaces flask and flask-cors)
+fastapi
+pydantic
+
+# ASGI server, used both for local development and, through gunicorn
+# below, for production. See the note in api_fastapi.py's entry point and
+# this folder's README.md for the difference between running uvicorn
+# directly and running it under gunicorn.
+uvicorn[standard]
+
+# Production process manager. Gunicorn does not "speak" the ASGI protocol
+# that FastAPI uses on its own, so it needs the small uvicorn-worker
+# package below to understand how to run a FastAPI/Uvicorn application as
+# one of its worker processes.
+
+# Therefore, Gunicorn → Uvicorn → FastAPI
+# Gunicorn (process manager, -w 4)
+#   |
+#   +-- Uvicorn worker 1 -> FastAPI app
+#   +-- Uvicorn worker 2 -> FastAPI app
+#   +-- Uvicorn worker 3 -> FastAPI app
+#   +-- Uvicorn worker 4 -> FastAPI app
+gunicorn
+uvicorn-worker

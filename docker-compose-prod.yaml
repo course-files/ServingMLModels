@@ -31,6 +31,10 @@ services:
     image: servingmlmodels-flask-gunicorn-app:1.0.0
     restart: always
 
+  fastapi-uvicorn-app:
+    image: servingmlmodels-fastapi-uvicorn-app:1.0.0
+    restart: always
+
   nginx:
     image: servingmlmodels-nginx:1.0.0
     ports:

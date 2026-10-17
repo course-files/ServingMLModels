@@ -87,6 +87,14 @@ services:
       # To store the required data persistently
       - home-student:/home/student
 
+ # Added for the FastAPI example.
+  fastapi-uvicorn-app:
+    image: servingmlmodels-fastapi-uvicorn-app:1.0.0
+    build:
+      context: .
+      dockerfile: ./fastapi-version/Dockerfile.fastapi-uvicorn-app
+    restart: always
+
 # Create the folder specified in "device" if it doesn't exist, and ensure it has the correct permissions
 # so that the container can read/write to it without issues.
 volumes:

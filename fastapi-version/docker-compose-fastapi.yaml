@@ -1,0 +1,46 @@
+# fastapi-version/docker-compose-fastapi.yaml
+#
+# A small, self-contained Compose file for building and running the
+# FastAPI container on its own, so you can test it quickly without
+# bringing up nginx or the ubuntu-server teaching container at all. Port
+# 8000 inside the container is published to port 8001 on your host here,
+# purely so you can curl it directly while testing.
+#
+# Run it from the REPOSITORY ROOT (not from inside fastapi-version/):
+#
+#   docker compose -f fastapi-version/docker-compose-fastapi.yaml up -d --build
+#
+# Then test it, for example (see this folder's README.md for the
+# PowerShell equivalent):
+#
+#   curl -X POST http://127.0.0.1:8001/api/v1/models/mall-customer-segmenter/predictions -H "Content-Type: application/json" -d "{\"Age\": 27, \"Annual Income (k$)\": 45, \"Spending Score (1-100)\": 72}"
+#
+# Tear it down the same way you tear down the rest of the lab:
+#
+#   docker compose -f fastapi-version/docker-compose-fastapi.yaml down -v --rmi all
+#
+# -----------------------------------------------------------------------
+# If you want FastAPI running behind the same Nginx reverse proxy used by
+# the Flask track (the Intermediate and Advanced tiers of the lab), do not
+# use this file. Instead, see the "Putting FastAPI behind Nginx" section
+# of this folder's README.md, which explains the one line to change in
+# container-volumes/nginx/nginx.conf and how to add this service to
+# docker-compose-dev.yaml without publishing a host port, matching the
+# architecture already used for the Flask track.
+# -----------------------------------------------------------------------
+
+services:
+  fastapi-uvicorn-app:
+    image: servingmlmodels-fastapi-uvicorn-app:1.0.0
+    build:
+      # Relative paths in a Compose file are resolved from the folder that
+      # CONTAINS this file (fastapi-version/), not from the folder you run
+      # the command in. ".." therefore means the repository root, which is
+      # the build context the Dockerfile needs (it copies both
+      # fastapi-version/ and model/). The dockerfile path below is
+      # relative to that context.
+      context: ..
+      dockerfile: fastapi-version/Dockerfile.fastapi-uvicorn-app
+    ports:
+      - "8001:8000"
+    restart: always

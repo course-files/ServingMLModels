@@ -17,8 +17,10 @@
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" width="40" />
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg" width="40"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg" width="40"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-plain.svg" width="40" />
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" width="40"/>
 <img src="assets/images/gunicorn-logo-png-transparent.png" width="60"/>
+<img src="assets/images/uvicorn-logo-png-transparent.png" width="45"/>
 <img src="assets/images/Hf-logo-with-title.svg" width="120"/>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/streamlit/streamlit-original.svg" width="40" />
 <img src="assets/images/Render-logo-Black.png" width="100"/>
@@ -107,6 +109,7 @@ Refer to the files below, in the order specified, for more details:
 4. [index.html](frontend/index.html) ← Example of a frontend (HTML, CSS, and JS) that consumes from the API endpoint
 5. [Reverse Proxy Server and Application Server Setup](app_server_reverse_proxy_server_setup.md) ← How to use Nginx as a reverse proxy server to serve the Flask application through Gunicorn
 6. [Publicly Serving the Model for Validation by Domain Experts](publicly_serving_the_model_for_validation_by_domain_experts.md) ← How to serve the model through Hugging Face, Streamlit, and Render
+7. [From Flask to FastAPI](fastapi-version/README.md) ← How FastAPI can be used to serve the model through Uvicorn instead of using Flask through Gunicorn
 
 ## Lab Submission Instructions
 

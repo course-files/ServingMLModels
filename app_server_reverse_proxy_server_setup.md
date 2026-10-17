@@ -183,7 +183,8 @@ docker compose \
   -f docker-compose-dev.yaml \
   up -d \
   --build \
-  --scale flask-gunicorn-app=2
+  --scale flask-gunicorn-app=2 \
+  --scale fastapi-uvicorn-app=0
 ```
 
 This builds and starts all three services: `flask-gunicorn-app` (scaled to 2 replicas), `nginx`, and `ubuntu-server`.
